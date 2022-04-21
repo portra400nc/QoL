@@ -26,6 +26,7 @@ namespace QoL
         private static GameObject Cutscene;
         private static float uiScale = 1;
         private static bool isVisible = true;
+        private static bool changeUID = false;
 
         public override void OnUpdate()
         {
@@ -71,10 +72,13 @@ namespace QoL
             {
                 if (UID2 == null)
                     UID2 = GameObject.Find("/Canvas/Pages/PlayerProfilePage/GrpProfile/Right/GrpPlayerCard/UID/Layout/PlayerID");
-                if (UID2)
-                    UID2.GetComponent<Text>().m_Text = "^_^";
                 if (UID)
-                    UID.GetComponent<Text>().text = "^_^";
+                    UID.GetComponent<Text>().text = "I HECKING LOOOOVE GENSHIN";
+            }
+            if (UID2)
+            {
+                if (UID2.GetComponent<Text>().m_Text != "I HECKING LOOOOVE GENSHIN")
+                    UID2.GetComponent<Text>().m_Text = "I HECKING LOOOOVE GENSHIN";
             }
         }
         public void ToggleHUD()

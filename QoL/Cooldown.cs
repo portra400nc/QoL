@@ -52,60 +52,87 @@ namespace QoL
         {
             if (id == 0)
             {
-                GUI.Label(new Rect(20, 40, 150, 30), "Character 1 | " + char1timer.ToString("F2"));
-                GUI.Label(new Rect(20, 60, 150, 30), "Character 2 | " + char2timer.ToString("F2"));
-                GUI.Label(new Rect(20, 80, 150, 30), "Character 3 | " + char3timer.ToString("F2"));
-                GUI.Label(new Rect(20, 100, 150, 30), "Character 4 | " + char4timer.ToString("F2"));
+                GUI.Label(new Rect(20, 40, 150, 30), "Character 1    " + char1timer.ToString("F2"));
+                GUI.Label(new Rect(20, 60, 150, 30), "Character 2    " + char2timer.ToString("F2"));
+                GUI.Label(new Rect(20, 80, 150, 30), "Character 3    " + char3timer.ToString("F2"));
+                GUI.Label(new Rect(20, 100, 150, 30), "Character 4    " + char4timer.ToString("F2"));
             }
             GUI.DragWindow();
         }
         public void Update()
         {
-            //if isready = false then grab isready's float then start timer
-            if (cdText != null)
+            if (isReady)
             {
-                if (cdText.m_Text != "0.0")
+                if (isReady.GPGMMHJKEJM == 0)
                 {
-                    if (cdText.m_Text != null)
+                    if (char1select.activeInHierarchy)
                     {
-                        if (isReady)
-                        {
-                            if (isReady.GPGMMHJKEJM == 0)
-                            {
-                                if (char1select.activeInHierarchy)
-                                {
-                                    if (char1timer == 0)
-                                    {
-                                        //char1timer = float.Parse(cdText.m_Text);
-                                        char1timer = isReady.FODDLLMGGNB;
-                                    }
-                                }
-                                if (char2select.activeInHierarchy)
-                                {
-                                    if (char2timer == 0)
-                                    {
-                                        char2timer = isReady.FODDLLMGGNB;
-                                    }
-                                }
-                                if (char3select.activeInHierarchy)
-                                {
-                                    if (char3timer == 0)
-                                    {
-                                        char3timer = isReady.FODDLLMGGNB;
-                                    }
-                                }
-                                if (char4select.activeInHierarchy)
-                                {
-                                    if (char4timer == 0)
-                                    {
-                                        char4timer = isReady.FODDLLMGGNB;
-                                    }
-                                }
-                            }
-                        }
+                        if (char1timer == 0)
+                            char1timer = isReady.FODDLLMGGNB;
+                    }
+                    if (char2select.activeInHierarchy)
+                    {
+                        if (char2timer == 0)
+                            char2timer = isReady.FODDLLMGGNB;
+                    }
+                    if (char3select.activeInHierarchy)
+                    {
+                        if (char3timer == 0)
+                            char3timer = isReady.FODDLLMGGNB;
+                    }
+                    if (char4select.activeInHierarchy)
+                    {
+                        if (char4timer == 0)
+                            char4timer = isReady.FODDLLMGGNB;
                     }
                 }
             }
+
+
+            //if (cdText != null)
+            //{
+            //    if (cdText.m_Text != "0.0")
+            //    {
+            //        if (cdText.m_Text != null)
+            //        {
+            //            if (isReady)
+            //            {
+            //                if (isReady.GPGMMHJKEJM == 0)
+            //                {
+            //                    if (char1select.activeInHierarchy)
+            //                    {
+            //                        if (char1timer == 0)
+            //                        {
+            //                            //char1timer = float.Parse(cdText.m_Text);
+            //                            char1timer = isReady.FODDLLMGGNB;
+            //                        }
+            //                    }
+            //                    if (char2select.activeInHierarchy)
+            //                    {
+            //                        if (char2timer == 0)
+            //                        {
+            //                            char2timer = isReady.FODDLLMGGNB;
+            //                        }
+            //                    }
+            //                    if (char3select.activeInHierarchy)
+            //                    {
+            //                        if (char3timer == 0)
+            //                        {
+            //                            char3timer = isReady.FODDLLMGGNB;
+            //                        }
+            //                    }
+            //                    if (char4select.activeInHierarchy)
+            //                    {
+            //                        if (char4timer == 0)
+            //                        {
+            //                            char4timer = isReady.FODDLLMGGNB;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             if (char1timer > 0)
                 char1timer -= Time.deltaTime;
             if (char1timer < 0)

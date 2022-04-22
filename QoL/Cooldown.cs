@@ -42,7 +42,7 @@ namespace QoL
         public static SimpleText cd4;
         public static SimpleText cdText;
 
-        public Rect windowRect = new Rect(20, 200, 190, 120);
+        public Rect windowRect = new Rect(20, 200, 190, 140);
 
         public void OnGUI()
         {
@@ -52,10 +52,10 @@ namespace QoL
         {
             if (id == 0)
             {
-                GUI.Label(new Rect(20, 20, 150, 30), "Character 1 | " + char1timer.ToString("F2"));
-                GUI.Label(new Rect(20, 40, 150, 30), "Character 2 | " + char2timer.ToString("F2"));
-                GUI.Label(new Rect(20, 60, 150, 30), "Character 3 | " + char3timer.ToString("F2"));
-                GUI.Label(new Rect(20, 80, 150, 30), "Character 4 | " + char4timer.ToString("F2"));
+                GUI.Label(new Rect(20, 40, 150, 30), "Character 1 | " + char1timer.ToString("F2"));
+                GUI.Label(new Rect(20, 60, 150, 30), "Character 2 | " + char2timer.ToString("F2"));
+                GUI.Label(new Rect(20, 80, 150, 30), "Character 3 | " + char3timer.ToString("F2"));
+                GUI.Label(new Rect(20, 100, 150, 30), "Character 4 | " + char4timer.ToString("F2"));
             }
             GUI.DragWindow();
         }
@@ -68,47 +68,38 @@ namespace QoL
                 {
                     if (cdText.m_Text != null)
                     {
-                        if (char1select.activeInHierarchy)
+                        if (isReady)
                         {
-                            if (char1timer == 0)
+                            if (isReady.GPGMMHJKEJM == 0)
                             {
-                                if (isReady)
+                                if (char1select.activeInHierarchy)
                                 {
-                                    if (isReady.GPGMMHJKEJM == 0)
-                                        char1timer = float.Parse(cdText.m_Text);
+                                    if (char1timer == 0)
+                                    {
+                                        //char1timer = float.Parse(cdText.m_Text);
+                                        char1timer = isReady.FODDLLMGGNB;
+                                    }
                                 }
-                            }
-                        }
-                        if (char2select.activeInHierarchy)
-                        {
-                            if (char2timer == 0)
-                            {
-                                if (isReady)
+                                if (char2select.activeInHierarchy)
                                 {
-                                    if (isReady.GPGMMHJKEJM == 0)
-                                        char2timer = float.Parse(cdText.m_Text);
+                                    if (char2timer == 0)
+                                    {
+                                        char2timer = isReady.FODDLLMGGNB;
+                                    }
                                 }
-                            }
-                        }
-                        if (char3select.activeInHierarchy)
-                        {
-                            if (char3timer == 0)
-                            {
-                                if (isReady)
+                                if (char3select.activeInHierarchy)
                                 {
-                                    if (isReady.GPGMMHJKEJM == 0)
-                                        char3timer = float.Parse(cdText.m_Text);
+                                    if (char3timer == 0)
+                                    {
+                                        char3timer = isReady.FODDLLMGGNB;
+                                    }
                                 }
-                            }
-                        }
-                        if (char4select.activeInHierarchy)
-                        {
-                            if (char4timer == 0)
-                            {
-                                if (isReady)
+                                if (char4select.activeInHierarchy)
                                 {
-                                    if (isReady.GPGMMHJKEJM == 0)
-                                        char4timer = float.Parse(cdText.m_Text);
+                                    if (char4timer == 0)
+                                    {
+                                        char4timer = isReady.FODDLLMGGNB;
+                                    }
                                 }
                             }
                         }

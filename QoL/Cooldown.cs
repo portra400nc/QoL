@@ -18,7 +18,6 @@ namespace QoL
         {
             ClassInjector.DerivedConstructorBody(this);
         }
-        public static GameObject Team;
 
         public static GameObject char1;
         public static GameObject char2;
@@ -36,26 +35,20 @@ namespace QoL
         public static float char3timer = 0;
         public static float char4timer = 0;
 
-        public static SimpleText cd1;
-        public static SimpleText cd2;
-        public static SimpleText cd3;
-        public static SimpleText cd4;
-        public static SimpleText cdText;
-
-        public Rect windowRect = new Rect(20, 200, 190, 140);
+        public Rect windowRect = new Rect(20, 200, 160, 140);
 
         public void OnGUI()
         {
-            windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
+            windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
         }
         public void CDWindow(int id)
         {
-            if (id == 0)
+            if (id == 1)
             {
-                GUI.Label(new Rect(20, 40, 150, 30), "Character 1    " + char1timer.ToString("F2"));
-                GUI.Label(new Rect(20, 60, 150, 30), "Character 2    " + char2timer.ToString("F2"));
-                GUI.Label(new Rect(20, 80, 150, 30), "Character 3    " + char3timer.ToString("F2"));
-                GUI.Label(new Rect(20, 100, 150, 30), "Character 4    " + char4timer.ToString("F2"));
+                GUI.Label(new Rect(20, 40, 150, 30), "Character 1    " + char1timer.ToString("F1"));
+                GUI.Label(new Rect(20, 60, 150, 30), "Character 2    " + char2timer.ToString("F1"));
+                GUI.Label(new Rect(20, 80, 150, 30), "Character 3    " + char3timer.ToString("F1"));
+                GUI.Label(new Rect(20, 100, 150, 30), "Character 4    " + char4timer.ToString("F1"));
             }
             GUI.DragWindow();
         }
@@ -88,51 +81,6 @@ namespace QoL
                 }
             }
 
-
-            //if (cdText != null)
-            //{
-            //    if (cdText.m_Text != "0.0")
-            //    {
-            //        if (cdText.m_Text != null)
-            //        {
-            //            if (isReady)
-            //            {
-            //                if (isReady.GPGMMHJKEJM == 0)
-            //                {
-            //                    if (char1select.activeInHierarchy)
-            //                    {
-            //                        if (char1timer == 0)
-            //                        {
-            //                            //char1timer = float.Parse(cdText.m_Text);
-            //                            char1timer = isReady.FODDLLMGGNB;
-            //                        }
-            //                    }
-            //                    if (char2select.activeInHierarchy)
-            //                    {
-            //                        if (char2timer == 0)
-            //                        {
-            //                            char2timer = isReady.FODDLLMGGNB;
-            //                        }
-            //                    }
-            //                    if (char3select.activeInHierarchy)
-            //                    {
-            //                        if (char3timer == 0)
-            //                        {
-            //                            char3timer = isReady.FODDLLMGGNB;
-            //                        }
-            //                    }
-            //                    if (char4select.activeInHierarchy)
-            //                    {
-            //                        if (char4timer == 0)
-            //                        {
-            //                            char4timer = isReady.FODDLLMGGNB;
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
             if (char1timer > 0)
                 char1timer -= Time.deltaTime;
             if (char1timer < 0)
@@ -187,14 +135,16 @@ namespace QoL
                     char4select = Starter.FindObject(char4, "Eff_UI_Pressed");
             }
 
-            if (cdText == null)
-            {
-                cdText = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)/CD").GetComponent<SimpleText>();
-            }
             if (isReady == null)
             {
                 isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
             }
+
+            //if (cdText == null)
+            //{
+            //    cdText = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)/CD").GetComponent<SimpleText>();
+            //}
+
 
             //// debug
             //if (char1)

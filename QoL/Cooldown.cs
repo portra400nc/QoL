@@ -42,7 +42,7 @@ namespace QoL
         public static SimpleText cd4;
         public static SimpleText cdText;
 
-        public Rect windowRect = new Rect(20, 200, 190, 100);
+        public Rect windowRect = new Rect(20, 200, 190, 120);
 
         public void OnGUI()
         {
@@ -61,6 +61,7 @@ namespace QoL
         }
         public void Update()
         {
+            //if isready = false then grab isready's float then start timer
             if (cdText != null)
             {
                 if (cdText.m_Text != "0.0")
@@ -73,7 +74,7 @@ namespace QoL
                             {
                                 if (isReady)
                                 {
-                                    if (isReady.EIIBJCDMONA == false)
+                                    if (isReady.GPGMMHJKEJM == 0)
                                         char1timer = float.Parse(cdText.m_Text);
                                 }
                             }
@@ -84,7 +85,7 @@ namespace QoL
                             {
                                 if (isReady)
                                 {
-                                    if (isReady.EIIBJCDMONA == false)
+                                    if (isReady.GPGMMHJKEJM == 0)
                                         char2timer = float.Parse(cdText.m_Text);
                                 }
                             }
@@ -95,7 +96,7 @@ namespace QoL
                             {
                                 if (isReady)
                                 {
-                                    if (isReady.EIIBJCDMONA == false)
+                                    if (isReady.GPGMMHJKEJM == 0)
                                         char3timer = float.Parse(cdText.m_Text);
                                 }
                             }
@@ -106,7 +107,7 @@ namespace QoL
                             {
                                 if (isReady)
                                 {
-                                    if (isReady.EIIBJCDMONA == false)
+                                    if (isReady.GPGMMHJKEJM == 0)
                                         char4timer = float.Parse(cdText.m_Text);
                                 }
                             }
@@ -177,27 +178,27 @@ namespace QoL
                 isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
             }
 
-            // debug
-            if (char1)
-                Debug.Log($"char1: {char1.name}");
-            if (char2)
-                Debug.Log($"char1: {char2.name}");
-            if (char3)
-                Debug.Log($"char1: {char3.name}");
-            if (char4)
-                Debug.Log($"char1: {char4.name}");
+            //// debug
+            //if (char1)
+            //    Debug.Log($"char1: {char1.name}");
+            //if (char2)
+            //    Debug.Log($"char1: {char2.name}");
+            //if (char3)
+            //    Debug.Log($"char1: {char3.name}");
+            //if (char4)
+            //    Debug.Log($"char1: {char4.name}");
 
-            if (cdText)
-                Debug.Log($"cdText: {cdText.transform.name}");
+            //if (cdText)
+            //    Debug.Log($"cdText: {cdText.transform.name}");
 
-            if (char1select)
-                Debug.Log($"char1: {char1select.name}");
-            if (char2select)
-                Debug.Log($"char1: {char2select.name}");
-            if (char3select)
-                Debug.Log($"char1: {char3select.name}");
-            if (char4select)
-                Debug.Log($"char1: {char4select.name}");
+            //if (char1select)
+            //    Debug.Log($"char1: {char1select.name}");
+            //if (char2select)
+            //    Debug.Log($"char1: {char2select.name}");
+            //if (char3select)
+            //    Debug.Log($"char1: {char3select.name}");
+            //if (char4select)
+            //    Debug.Log($"char1: {char4select.name}");
         }
     }
 }

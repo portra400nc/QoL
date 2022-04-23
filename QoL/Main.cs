@@ -38,6 +38,12 @@ namespace QoL
         private static bool changeUID = false;
 
         public static bool foundTxt = false;
+        /*  Plans
+         *  Add character name
+            Remove character switching cooldown
+            Remove edit party cooldown
+            DPS calculator
+        */
 
         public override void OnApplicationStart()
         {

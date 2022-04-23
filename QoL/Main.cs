@@ -79,35 +79,35 @@ namespace QoL
                 else
                     ToggleHUD();
 
-                //if (Txt == null)
-                //    Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
-                //else
-                //    Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
+                if (Txt == null)
+                    Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
+                else
+                    Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
 
-                //if (Cutscene == null)
-                //    Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
+                if (Cutscene == null)
+                    Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
             }
-            
 
-            //if (Txt != null)
+
+            if (Txt != null)
+            {
+                if (Txt.GetComponent<MonoTypewriter>()._secondPerChar != 0.00001f)
+                    Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
+            }
+            if (Cutscene != null)
+            {
+                if (Cutscene.activeInHierarchy)
+                    Time.timeScale = 5f;
+                else
+                    Time.timeScale = 1f;
+            }
+            //if (Input.GetKeyDown(KeyCode.F8))
             //{
-            //    if (Txt.GetComponent<MonoTypewriter>()._secondPerChar != 0.00001f)
-            //        Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
+            //    if (UID2 == null)
+            //        UID2 = GameObject.Find("/Canvas/Pages/PlayerProfilePage/GrpProfile/Right/GrpPlayerCard/UID/Layout/PlayerID");
+            //    if (UID)
+            //        UID.GetComponent<Text>().text = "I HECKING LOOOOVE GENSHIN";
             //}
-            //if (Cutscene != null)
-            //{
-            //    if (Cutscene.activeInHierarchy)
-            //        Time.timeScale = 5f;
-            //    else
-            //        Time.timeScale = 1f;
-            //}
-            ////if (Input.GetKeyDown(KeyCode.F8))
-            ////{
-            ////    if (UID2 == null)
-            ////        UID2 = GameObject.Find("/Canvas/Pages/PlayerProfilePage/GrpProfile/Right/GrpPlayerCard/UID/Layout/PlayerID");
-            ////    if (UID)
-            ////        UID.GetComponent<Text>().text = "I HECKING LOOOOVE GENSHIN";
-            ////}
             //if (UID2 != null)
             //{
             //    if (UID2.GetComponent<Text>().m_Text != "I HECKING LOOOOVE GENSHIN")

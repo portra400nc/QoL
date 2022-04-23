@@ -34,6 +34,7 @@ namespace QoL
         public static GameObject char3select;
         public static GameObject char4select;
         public static MonoBattleBtn isReady;
+        public static MonoBattleBtn bisReady;
 
         public static float modHeight = 100f;
 
@@ -42,13 +43,31 @@ namespace QoL
         public static float char3timer = 0;
         public static float char4timer = 0;
 
-        //public Rect windowRect = new Rect(20, 200, 160, 140);
-        public Rect windowRect = new Rect(20, 200, 160, modHeight);
+        public static float char1btimer = 0;
+        public static float char2btimer = 0;
+        public static float char3btimer = 0;
+        public static float char4btimer = 0;
+
+        public static GameObject char1bstate;
+        public static GameObject char2bstate;
+        public static GameObject char3bstate;
+        public static GameObject char4bstate;
+
+        public static string char1bisready = "X";
+        public static string char2bisready = "X";
+        public static string char3bisready = "X";
+        public static string char4bisready = "X";
+
+        public static float xAlign = 0f;
+
+        //public Rect windowRect = new Rect(20, 200, 160, 100);
+        public Rect windowRect = new Rect(20, 200, 240, 100);
+
 
 
         public void OnGUI()
         {
-            windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Skill Cooldown");
+            windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
         }
         public void CDWindow(int id)
         {
@@ -56,7 +75,7 @@ namespace QoL
             {
                 GUIStyle style = new GUIStyle
                 {
-                    alignment = TextAnchor.MiddleRight
+                    alignment = TextAnchor.MiddleCenter
                 };
                 style.normal.textColor = Color.white;
 
@@ -65,28 +84,52 @@ namespace QoL
                     alignment = TextAnchor.MiddleLeft
                 };
                 style2.normal.textColor = Color.white;
+
+                GUIStyle style3 = new GUIStyle
+                {
+                    alignment = TextAnchor.MiddleRight
+                };
+                style3.normal.textColor = Color.white;
                 //GUI.Label(new Rect(20, 40, 150, 30), "Character 1    " + char1timer.ToString("F1"));
                 //GUI.Label(new Rect(20, 40, 150, 30), $"{char1name.m_Text}    {char1timer.ToString("F1")}");
-                GUI.Label(new Rect(10, 10, 150, 30), $"{char1name.m_Text}", style2);
-                GUI.Label(new Rect(0, 10, 150, 30), $"{char1timer.ToString("F1")}", style);
+                if (char1name)
+                {
+                    GUI.Label(new Rect(10, 10, 150, 30), $"{char1name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 10, 150, 30), $"{char1timer.ToString("F1")}", style);
+                    GUI.Label(new Rect(80, 10, 150, 30), $"{char1btimer.ToString("F1")} {char1bisready}", style3);
+                }
+                
+                if (char2name)
+                {
+                    GUI.Label(new Rect(10, 30, 150, 30), $"{char2name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 30, 150, 30), $"{char2timer.ToString("F1")}", style);
+                    GUI.Label(new Rect(80, 30, 150, 30), $"{char2btimer.ToString("F1")} {char2bisready}", style3);
+                }
 
-                GUI.Label(new Rect(10, 30, 150, 30), $"{char2name.m_Text}", style2);
-                GUI.Label(new Rect(0, 30, 150, 30), $"{char2timer.ToString("F1")}", style);
+                if (char3name)
+                {
+                    GUI.Label(new Rect(10, 50, 150, 30), $"{char3name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 50, 150, 30), $"{char3timer.ToString("F1")}", style);
+                    GUI.Label(new Rect(80, 50, 150, 30), $"{char3btimer.ToString("F1")} {char3bisready}", style3);
 
-                GUI.Label(new Rect(10, 50, 150, 30), $"{char3name.m_Text}", style2);
-                GUI.Label(new Rect(0, 50, 150, 30), $"{char3timer.ToString("F1")}", style);
+                }
 
-                GUI.Label(new Rect(10, 70, 150, 30), $"{char4name.m_Text}", style2);
-                GUI.Label(new Rect(0, 70, 150, 30), $"{char4timer.ToString("F1")}", style);
+                if (char4name)
+                {
+                    GUI.Label(new Rect(10, 70, 150, 30), $"{char4name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 70, 150, 30), $"{char4timer.ToString("F1")}", style);
+                    GUI.Label(new Rect(80, 70, 150, 30), $"{char4btimer.ToString("F1")} {char4bisready}", style3);
+                }
+
             }
             GUI.DragWindow();
         }
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
-                modHeight -= 5;
+                xAlign -= 5;
             if (Input.GetKeyDown(KeyCode.RightArrow))
-                modHeight += 5;
+                xAlign += 5;
             if (isReady)
             {
                 if (isReady.GPGMMHJKEJM == 0)
@@ -109,7 +152,30 @@ namespace QoL
                     }
                 }
             }
+            if (bisReady)
+            {
+                if (bisReady.GPGMMHJKEJM == 0)
+                {
+                    if (char1select.activeInHierarchy)
+                    {
+                        char1btimer = bisReady.FODDLLMGGNB;
+                    }
+                    if (char2select.activeInHierarchy)
+                    {
+                        char2btimer = bisReady.FODDLLMGGNB;
+                    }
+                    if (char3select.activeInHierarchy)
+                    {
+                        char3btimer = bisReady.FODDLLMGGNB;
+                    }
+                    if (char4select.activeInHierarchy)
+                    {
+                        char4btimer = bisReady.FODDLLMGGNB;
+                    }
+                }
+            }
 
+            // Skill timer
             if (char1timer > 0)
                 char1timer -= Time.deltaTime;
             if (char1timer < 0)
@@ -130,6 +196,56 @@ namespace QoL
             if (char4timer < 0)
                 char4timer = 0.00f;
 
+            // Burst timer
+            if (char1btimer > 0)
+                char1btimer -= Time.deltaTime;
+            if (char1btimer < 0)
+                char1btimer = 0.00f;
+
+            if (char2btimer > 0)
+                char2btimer -= Time.deltaTime;
+            if (char2btimer < 0)
+                char2btimer = 0.00f;
+
+            if (char3btimer > 0)
+                char3btimer -= Time.deltaTime;
+            if (char3btimer < 0)
+                char3btimer = 0.00f;
+
+            if (char4btimer > 0)
+                char4btimer -= Time.deltaTime;
+            if (char4btimer < 0)
+                char4btimer = 0.00f;
+
+            if (char1bstate)
+            {
+                if (char1bstate.activeInHierarchy)
+                    char1bisready = "O";
+                else
+                    char1bisready = "X";
+            }
+            if (char2bstate)
+            {
+                if (char2bstate.activeInHierarchy)
+                    char2bisready = "O";
+                else
+                    char2bisready = "X";
+            }
+            if (char3bstate)
+            {
+                if (char3bstate.activeInHierarchy)
+                    char3bisready = "O";
+                else
+                    char3bisready = "X";
+            }
+            if (char4bstate)
+            {
+                if (char4bstate.activeInHierarchy)
+                    char4bisready = "O";
+                else
+                    char4bisready = "X";
+            }
+
             // Find Objects
             if (char1 == null)
                 char1 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0");
@@ -145,28 +261,50 @@ namespace QoL
                 if (char1)
                     char1select = Starter.FindObject(char1, "Eff_UI_Pressed");
             }
-
             if (char2select == null)
             {
                 if (char2)
                     char2select = Starter.FindObject(char2, "Eff_UI_Pressed");
             }
-
             if (char3select == null)
             {
                 if (char3)
                     char3select = Starter.FindObject(char3, "Eff_UI_Pressed");
             }
-
             if (char4select == null)
             {
                 if (char4)
                     char4select = Starter.FindObject(char4, "Eff_UI_Pressed");
             }
 
+            if (char1bstate == null)
+            {
+                if (char1)
+                    char1bstate = Starter.FindObject(char1, "EC_Btn");
+            }
+            if (char2bstate == null)
+            {
+                if (char2)
+                    char2bstate = Starter.FindObject(char2, "EC_Btn");
+            }
+            if (char3bstate == null)
+            {
+                if (char3)
+                    char3bstate = Starter.FindObject(char3, "EC_Btn");
+            }
+            if (char4bstate == null)
+            {
+                if (char4)
+                    char4bstate = Starter.FindObject(char4, "EC_Btn");
+            }
+
             if (isReady == null)
             {
                 isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
+            }
+            if (bisReady == null)
+            {
+                bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)").GetComponent<MonoBattleBtn>();
             }
             if (char1name == null)
                 char1name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();

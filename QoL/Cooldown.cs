@@ -53,9 +53,6 @@ namespace QoL
         public static GameObject char3bstate;
         public static GameObject char4bstate;
 
-        public static GameObject charbKeyboard;
-        public static GameObject charbController;
-
         public static string char1bisready = "X";
         public static string char2bisready = "X";
         public static string char3bisready = "X";
@@ -305,12 +302,6 @@ namespace QoL
             {
                 isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
             }
-
-            //if (charbKeyboard == null)
-            //    charbKeyboard = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
-
-            //if (charbController == null)
-            //    charbController = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
 
             if (bisReady == null)
             {

@@ -53,6 +53,9 @@ namespace QoL
         public static GameObject char3bstate;
         public static GameObject char4bstate;
 
+        public static GameObject charbKeyboard;
+        public static GameObject charbController;
+
         public static string char1bisready = "X";
         public static string char2bisready = "X";
         public static string char3bisready = "X";
@@ -98,7 +101,7 @@ namespace QoL
                     GUI.Label(new Rect(80, 10, 150, 30), $"{char1timer.ToString("F1")}", style);
                     GUI.Label(new Rect(80, 10, 150, 30), $"{char1btimer.ToString("F1")} {char1bisready}", style3);
                 }
-                
+
                 if (char2name)
                 {
                     GUI.Label(new Rect(10, 30, 150, 30), $"{char2name.m_Text}", style2);
@@ -196,7 +199,7 @@ namespace QoL
             if (char4timer < 0)
                 char4timer = 0.00f;
 
-            // Burst timer
+            //Burst timer
             if (char1btimer > 0)
                 char1btimer -= Time.deltaTime;
             if (char1btimer < 0)
@@ -302,10 +305,21 @@ namespace QoL
             {
                 isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
             }
+
+            //if (charbKeyboard == null)
+            //    charbKeyboard = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
+
+            //if (charbController == null)
+            //    charbController = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
+
             if (bisReady == null)
             {
-                bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)").GetComponent<MonoBattleBtn>();
+                if (GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)"))
+                    bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)").GetComponent<MonoBattleBtn>();
+                else if (GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)"))
+                    bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)").GetComponent<MonoBattleBtn>();
             }
+
             if (char1name == null)
                 char1name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
             if (char2name == null)

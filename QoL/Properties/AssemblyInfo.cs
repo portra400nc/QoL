@@ -11,10 +11,10 @@ using MelonLoader;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("QoL")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCopyright("Copyright © portra 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: MelonInfo(typeof(QoL.Main), "QoL", "1.0.0", "portra")]
+[assembly: MelonInfo(typeof(QoL.Loader), "QoL", "1.0.0", "portra")]
 [assembly: MelonGame(null, null)]
 
 // Setting ComVisible to false makes the types in this assembly not visible

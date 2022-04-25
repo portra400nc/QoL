@@ -312,10 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cooldown.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Starter.cs" />
-    <Compile Include="Toggle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

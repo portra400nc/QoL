@@ -60,10 +60,9 @@ namespace QoL
 
         public static float xAlign = 0f;
 
-        //public Rect windowRect = new Rect(20, 200, 160, 100);
-        public Rect windowRect = new Rect(20, 200, 240, 100);
-
-
+        public static int winW = 240;
+        public static int winH = 100;
+        public Rect windowRect = new Rect(20, (Screen.height - winH) / 2, winW, winH);
 
         public void OnGUI()
         {
@@ -90,8 +89,7 @@ namespace QoL
                     alignment = TextAnchor.MiddleRight
                 };
                 style3.normal.textColor = Color.white;
-                //GUI.Label(new Rect(20, 40, 150, 30), "Character 1    " + char1timer.ToString("F1"));
-                //GUI.Label(new Rect(20, 40, 150, 30), $"{char1name.m_Text}    {char1timer.ToString("F1")}");
+
                 if (char1name)
                 {
                     GUI.Label(new Rect(10, 10, 150, 30), $"{char1name.m_Text}", style2);
@@ -259,43 +257,43 @@ namespace QoL
             if (char1select == null)
             {
                 if (char1)
-                    char1select = Starter.FindObject(char1, "Eff_UI_Pressed");
+                    char1select = FindObject(char1, "Eff_UI_Pressed");
             }
             if (char2select == null)
             {
                 if (char2)
-                    char2select = Starter.FindObject(char2, "Eff_UI_Pressed");
+                    char2select = FindObject(char2, "Eff_UI_Pressed");
             }
             if (char3select == null)
             {
                 if (char3)
-                    char3select = Starter.FindObject(char3, "Eff_UI_Pressed");
+                    char3select = FindObject(char3, "Eff_UI_Pressed");
             }
             if (char4select == null)
             {
                 if (char4)
-                    char4select = Starter.FindObject(char4, "Eff_UI_Pressed");
+                    char4select = FindObject(char4, "Eff_UI_Pressed");
             }
 
             if (char1bstate == null)
             {
                 if (char1)
-                    char1bstate = Starter.FindObject(char1, "EC_Btn");
+                    char1bstate = FindObject(char1, "EC_Btn");
             }
             if (char2bstate == null)
             {
                 if (char2)
-                    char2bstate = Starter.FindObject(char2, "EC_Btn");
+                    char2bstate = FindObject(char2, "EC_Btn");
             }
             if (char3bstate == null)
             {
                 if (char3)
-                    char3bstate = Starter.FindObject(char3, "EC_Btn");
+                    char3bstate = FindObject(char3, "EC_Btn");
             }
             if (char4bstate == null)
             {
                 if (char4)
-                    char4bstate = Starter.FindObject(char4, "EC_Btn");
+                    char4bstate = FindObject(char4, "EC_Btn");
             }
 
             if (isReady == null)
@@ -347,6 +345,24 @@ namespace QoL
             //    Debug.Log($"char1: {char3select.name}");
             //if (char4select)
             //    Debug.Log($"char1: {char4select.name}");
+        }
+        public static GameObject FindObject(GameObject parent, string name)
+        {
+            GameObject candidate = null;
+            Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if (t == null)
+                {
+                    continue;
+                }
+                if (t.name == name)
+                {
+                    candidate = t.gameObject;
+                }
+            }
+            Array.Clear(trs, 0, trs.Length);
+            return candidate;
         }
     }
 }

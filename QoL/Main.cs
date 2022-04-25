@@ -55,8 +55,6 @@ namespace QoL
 
         public override void OnUpdate()
         {
-            if (!Input.anyKey || !Input.anyKeyDown)
-                return;
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
                 if (isRunning == null)
@@ -79,22 +77,28 @@ namespace QoL
                 else
                     ToggleHUD();
 
+                //if (Txt == null)
+                //    Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
+                //else
+                //    Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
+
+                //if (Cutscene == null)
+                //    Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
+            }
+            if (isRunning)
+            {
                 if (Txt == null)
                     Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
-                else
-                    Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
-
                 if (Cutscene == null)
                     Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
             }
 
-
-            if (Txt != null)
+            if (Txt)
             {
                 if (Txt.GetComponent<MonoTypewriter>()._secondPerChar != 0.00001f)
                     Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
             }
-            if (Cutscene != null)
+            if (Cutscene)
             {
                 if (Cutscene.activeInHierarchy)
                     Time.timeScale = 5f;

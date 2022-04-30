@@ -66,7 +66,8 @@ namespace QoL
 
         public void OnGUI()
         {
-            windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
+            if (Loader.showCD)
+                windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
         }
         public void CDWindow(int id)
         {

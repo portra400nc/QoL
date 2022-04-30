@@ -65,6 +65,8 @@ namespace QoL
             {
                 enableTxt = GUILayout.Toggle(enableTxt, "Fast Text Speed", new GUILayoutOption[0]);
                 enableCutscene = GUILayout.Toggle(enableCutscene, "Fast Cutscene Speed", new GUILayoutOption[0]);
+                GUILayout.Space(20);
+                GUILayout.Label("UID", new GUILayoutOption[0]);
                 UIDText = GUILayout.TextField(UIDText, new GUILayoutOption[0]);
             }
             GUI.DragWindow();

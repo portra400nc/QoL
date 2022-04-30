@@ -31,12 +31,21 @@ namespace QoL
         public static Text char3name;
         public static Text char4name;
 
+        public static GameObject char1nameObj;
+        public static GameObject char2nameObj;
+        public static GameObject char3nameObj;
+        public static GameObject char4nameObj;
+
         public static GameObject char1select;
         public static GameObject char2select;
         public static GameObject char3select;
         public static GameObject char4select;
         public static MonoBattleBtn isReady;
         public static MonoBattleBtn bisReady;
+
+        public static GameObject isReadyObj;
+        public static GameObject bisReadyPC;
+        public static GameObject bisReadyCon;
 
         public static float modHeight = 100f;
 
@@ -135,19 +144,19 @@ namespace QoL
             {
                 if (isReady.GPGMMHJKEJM == 0)
                 {
-                    if (char1select.activeInHierarchy)
+                    if (char1select && char1select.activeInHierarchy)
                     {
                         char1timer = isReady.FODDLLMGGNB;
                     }
-                    if (char2select.activeInHierarchy)
+                    if (char2select && char2select.activeInHierarchy)
                     {
                         char2timer = isReady.FODDLLMGGNB;
                     }
-                    if (char3select.activeInHierarchy)
+                    if (char3select && char3select.activeInHierarchy)
                     {
                         char3timer = isReady.FODDLLMGGNB;
                     }
-                    if (char4select.activeInHierarchy)
+                    if (char4select && char4select.activeInHierarchy)
                     {
                         char4timer = isReady.FODDLLMGGNB;
                     }
@@ -157,19 +166,19 @@ namespace QoL
             {
                 if (bisReady.GPGMMHJKEJM == 0)
                 {
-                    if (char1select.activeInHierarchy)
+                    if (char1select && char1select.activeInHierarchy)
                     {
                         char1btimer = bisReady.FODDLLMGGNB;
                     }
-                    if (char2select.activeInHierarchy)
+                    if (char2select && char2select.activeInHierarchy)
                     {
                         char2btimer = bisReady.FODDLLMGGNB;
                     }
-                    if (char3select.activeInHierarchy)
+                    if (char3select && char3select.activeInHierarchy)
                     {
                         char3btimer = bisReady.FODDLLMGGNB;
                     }
-                    if (char4select.activeInHierarchy)
+                    if (char4select && char4select.activeInHierarchy)
                     {
                         char4btimer = bisReady.FODDLLMGGNB;
                     }
@@ -299,27 +308,77 @@ namespace QoL
                     char4bstate = FindObject(char4, "EC_Btn");
             }
 
+            if (isReadyObj == null)
+                isReadyObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)");
+
             if (isReady == null)
             {
-                isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
+                if (isReadyObj)
+                {
+                    isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
+                }
             }
+
+            if (bisReadyPC == null)
+                bisReadyPC = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
+            if (bisReadyCon == null)
+                bisReadyCon = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
 
             if (bisReady == null)
             {
-                if (GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)"))
-                    bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)").GetComponent<MonoBattleBtn>();
-                else if (GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)"))
-                    bisReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)").GetComponent<MonoBattleBtn>();
+                if (bisReadyPC)
+                    bisReady = bisReadyPC.GetComponent<MonoBattleBtn>();
+                else if (bisReadyCon)
+                    bisReady = bisReadyCon.GetComponent<MonoBattleBtn>();
             }
 
+            //if (bisReady == null)
+            //{
+            //    if (bisReadyPC)
+            //    {
+            //        if (bisReadyPC.GetComponent<MonoBattleBtn>())
+            //            bisReady = bisReadyPC.GetComponent<MonoBattleBtn>();
+            //    }
+            //    else
+            //    {
+            //        if (bisReadyCon)
+            //        {
+            //            if (bisReadyCon.GetComponent<MonoBattleBtn>())
+            //                bisReady = bisReadyCon.GetComponent<MonoBattleBtn>();
+            //        }
+            //    }
+            //}
+
+            if (char1nameObj == null)
+                char1nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
+            if (char2nameObj == null)
+                char2nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText");
+            if (char3nameObj == null)
+                char3nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText");
+            if (char4nameObj == null)
+                char4nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText");
+
+
             if (char1name == null)
-                char1name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
+            {
+                if (char1nameObj)
+                    char1name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
+            }
             if (char2name == null)
-                char2name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText").GetComponent<Text>();
+            {
+                if (char2nameObj)
+                    char2name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText").GetComponent<Text>();
+            }
             if (char3name == null)
-                char3name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText").GetComponent<Text>();
+            {
+                if (char3nameObj)
+                    char3name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText").GetComponent<Text>();
+            }
             if (char4name == null)
-                char4name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
+            {
+                if (char4nameObj)
+                    char4name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
+            }
 
             //if (cdText == null)
             //{

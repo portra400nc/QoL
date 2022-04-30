@@ -20,6 +20,8 @@ namespace QoL
             ClassInjector.DerivedConstructorBody(this);
         }
 
+        public static int targetFPS = 300;
+
         public static bool showCD = true;
         public static bool showMenu = false;
 
@@ -42,6 +44,8 @@ namespace QoL
         public static GameObject UID;
         public static GameObject UID2;
 
+        public static GUILayoutOption[] buttonSize;
+
         public static string UIDText = "Press Ctrl + ` to edit your UID";
 
         private static bool isVisible = true;
@@ -55,6 +59,7 @@ namespace QoL
 
         public void Start()
         {
+            SetFPS();
             MelonCoroutines.Start(FindElements());
         }
 
@@ -67,11 +72,30 @@ namespace QoL
         {
             if (id == 2)
             {
+                buttonSize = new GUILayoutOption[]
+                {
+                    GUILayout.Width(40),
+                    GUILayout.Height(20)
+                };
                 enableTxt = GUILayout.Toggle(enableTxt, "Fast Text Speed", new GUILayoutOption[0]);
                 enableCutscene = GUILayout.Toggle(enableCutscene, "Fast Cutscene Speed", new GUILayoutOption[0]);
+
                 GUILayout.Space(20);
+
                 GUILayout.Label("UID", new GUILayoutOption[0]);
                 UIDText = GUILayout.TextField(UIDText, new GUILayoutOption[0]);
+
+                GUILayout.Space(20);
+
+                GUILayout.Label($"FPS Limit: {targetFPS}", new GUILayoutOption[0]);
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Apply", new GUILayoutOption[0]))
+                    SetFPS();
+                if (GUILayout.Button("-", new GUILayoutOption[0]))
+                    targetFPS -= 10;
+                if (GUILayout.Button("+", new GUILayoutOption[0]))
+                    targetFPS += 10;
+                GUILayout.EndHorizontal();
             }
             GUI.DragWindow();
         }
@@ -202,6 +226,11 @@ namespace QoL
                 Cursor.lockState = value ? CursorLockMode.Locked : CursorLockMode.None;
                 Cursor.visible = value == false;
             }
+        }
+
+        public static void SetFPS()
+        {
+            Application.targetFrameRate = targetFPS;
         }
     }
 }

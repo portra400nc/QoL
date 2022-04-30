@@ -9,6 +9,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using MoleMole;
 
+using static QoL.Main;
+
 namespace QoL
 {
     public class Cooldown : MonoBehaviour
@@ -66,7 +68,7 @@ namespace QoL
 
         public void OnGUI()
         {
-            if (Loader.showCD)
+            if (showCD)
                 windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
         }
         public void CDWindow(int id)
@@ -125,10 +127,10 @@ namespace QoL
         }
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-                xAlign -= 5;
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-                xAlign += 5;
+            //if (Input.GetKeyDown(KeyCode.LeftArrow))
+            //    xAlign -= 5;
+            //if (Input.GetKeyDown(KeyCode.RightArrow))
+            //    xAlign += 5;
             if (isReady)
             {
                 if (isReady.GPGMMHJKEJM == 0)

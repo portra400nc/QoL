@@ -19,6 +19,10 @@ namespace QoL
         {
             ClassInjector.DerivedConstructorBody(this);
         }
+
+        public static bool showCD = true;
+        public static bool showMenu = false;
+
         public static bool enableTxt = true;
         public static bool enableCutscene = true;
 
@@ -56,7 +60,7 @@ namespace QoL
 
         public void OnGUI()
         {
-            if (Loader.showMenu)
+            if (showMenu)
                 windowRect = GUILayout.Window(2, windowRect, (GUI.WindowFunction)UIDWindow, "QoL by portra", new GUILayoutOption[0]);
         }
         public void UIDWindow(int id)
@@ -113,8 +117,13 @@ namespace QoL
             if (Input.GetKeyDown(KeyCode.BackQuote))
                 ToggleHUD();
 
-            if (Loader.showMenu == true)
+            if (showMenu == true)
                 Focused = false;
+
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+                showCD = !showCD;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
+                showMenu = !showMenu;
 
             // SET
             if (enableTxt)

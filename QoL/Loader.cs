@@ -15,8 +15,7 @@ namespace QoL
     public class Loader : MelonMod
     {
         public static GameObject isRunning;
-        public static bool showCD = true;
-        public static bool showMenu = false;
+        
 
         public override void OnApplicationStart()
         {
@@ -33,12 +32,9 @@ namespace QoL
                     isRunning = new GameObject();
                     isRunning.AddComponent<Cooldown>();
                     isRunning.AddComponent<Main>();
+                    GameObject.DontDestroyOnLoad(isRunning);
                 }
             }
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
-                showCD = !showCD;
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
-                showMenu = !showMenu;
         }
     }
 }

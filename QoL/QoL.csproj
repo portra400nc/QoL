@@ -311,6 +311,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraController.cs" />
     <Compile Include="Cooldown.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Main.cs" />

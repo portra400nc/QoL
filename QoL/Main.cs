@@ -1,11 +1,7 @@
-﻿using MoleMole;
-using MelonLoader;
+﻿using MelonLoader;
+using MoleMole;
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +23,21 @@ namespace QoL
 
         public static bool enableTxt = true;
         public static bool enableCutscene = true;
+        public static bool enableCam = true;
+
+        public static bool CamIsActive;
+
+        public static GameObject activeAvatar;
+        public static GameObject AvatarRoot;
+        public static GameObject camTarget;
+
+        public static Transform _target;
+        public static float _distanceFromTarget = 15.0f;
+
+
+        public static Camera maincam;
+        public static GameObject maincamObj;
+        public static GameObject newcamObj;
 
         private static GameObject TopRight;
         private static GameObject TopLeft;
@@ -44,6 +55,7 @@ namespace QoL
         public static GameObject UID;
         public static GameObject UID2;
 
+
         public static GUILayoutOption[] buttonSize;
 
         public static string UIDText = "Press Ctrl + ` to edit your UID";
@@ -55,7 +67,6 @@ namespace QoL
         private static int winW = 150;
         private static int winH = 50;
         public Rect windowRect = new Rect((Screen.width - winW) / 2, (Screen.height - winH) / 2, winW, winH);
-
 
         public void Start()
         {
@@ -79,6 +90,19 @@ namespace QoL
                 };
                 enableTxt = GUILayout.Toggle(enableTxt, "Fast Text Speed", new GUILayoutOption[0]);
                 enableCutscene = GUILayout.Toggle(enableCutscene, "Fast Cutscene Speed", new GUILayoutOption[0]);
+
+                GUILayout.Space(10);
+
+                enableCam = GUILayout.Toggle(enableCam, $"Custom Camera Distance: {_distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
+                _distanceFromTarget = GUILayout.HorizontalSlider(_distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Reset", buttonSize))
+                    _distanceFromTarget = 15f;
+                if (GUILayout.Button("-", buttonSize))
+                    _distanceFromTarget -= 1f;
+                if (GUILayout.Button("+", buttonSize))
+                    _distanceFromTarget += 1f;
+                GUILayout.EndHorizontal();
 
                 GUILayout.Space(20);
 
@@ -148,6 +172,43 @@ namespace QoL
                 showCD = !showCD;
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
                 showMenu = !showMenu;
+
+            // Cam
+            if (enableCam)
+                EnableCam();
+            else
+                DisableCam();
+
+            // FIND
+            if (maincamObj == null)
+                maincamObj = GameObject.Find("/EntityRoot/MainCamera(Clone)");
+
+            if (AvatarRoot == null)
+                AvatarRoot = GameObject.Find("/EntityRoot/AvatarRoot");
+
+            if (AvatarRoot)
+            {
+                try
+                {
+                    if (activeAvatar == null)
+                        FindActiveAvatar();
+                    if (!activeAvatar.activeInHierarchy)
+                        FindActiveAvatar();
+                }
+                catch { }
+            }
+            if (maincamObj)
+            {
+                if (maincam == null)
+                    maincam = maincamObj.GetComponent<Camera>();
+
+                if (newcamObj == null)
+                {
+                    newcamObj = GameObject.Instantiate(maincamObj);
+                    if (newcamObj.GetComponent<CameraController>() == null)
+                        newcamObj.AddComponent<CameraController>();
+                }
+            }
 
             // SET
             if (enableTxt)
@@ -231,6 +292,47 @@ namespace QoL
         public static void SetFPS()
         {
             Application.targetFrameRate = targetFPS;
+        }
+
+        public void FindActiveAvatar()
+        {
+            foreach (var a in AvatarRoot.transform)
+            {
+                Transform active = a.Cast<Transform>();
+                if (active.gameObject.activeInHierarchy)
+                {
+                    _target = active;
+                    activeAvatar = active.gameObject;
+                }
+            }
+        }
+
+        public void EnableCam()
+        {
+            if (maincamObj)
+            {
+                if (newcamObj)
+                {
+                    if (maincam)
+                    {
+                        newcamObj.SetActive(true);
+                        maincamObj.SetActive(false);
+                        CamIsActive = true;
+                    }
+                }
+            }
+        }
+        public void DisableCam()
+        {
+            if (maincamObj)
+            {
+                if (newcamObj)
+                {
+                    newcamObj.SetActive(false);
+                    maincamObj.SetActive(true);
+                    CamIsActive = false;
+                }
+            }
         }
     }
 }

@@ -113,7 +113,7 @@ namespace QoL
                 _distanceFromTarget = GUILayout.HorizontalSlider(_distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
-                    _distanceFromTarget = 15f;
+                    _distanceFromTarget = 20f;
                 if (GUILayout.Button("-", buttonSize))
                     _distanceFromTarget -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))

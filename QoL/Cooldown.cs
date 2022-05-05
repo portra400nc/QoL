@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -136,10 +131,6 @@ namespace QoL
         }
         public void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.LeftArrow))
-            //    xAlign -= 5;
-            //if (Input.GetKeyDown(KeyCode.RightArrow))
-            //    xAlign += 5;
             if (isReady)
             {
                 if (isReady.GPGMMHJKEJM == 0)
@@ -332,23 +323,6 @@ namespace QoL
                     bisReady = bisReadyCon.GetComponent<MonoBattleBtn>();
             }
 
-            //if (bisReady == null)
-            //{
-            //    if (bisReadyPC)
-            //    {
-            //        if (bisReadyPC.GetComponent<MonoBattleBtn>())
-            //            bisReady = bisReadyPC.GetComponent<MonoBattleBtn>();
-            //    }
-            //    else
-            //    {
-            //        if (bisReadyCon)
-            //        {
-            //            if (bisReadyCon.GetComponent<MonoBattleBtn>())
-            //                bisReady = bisReadyCon.GetComponent<MonoBattleBtn>();
-            //        }
-            //    }
-            //}
-
             if (char1nameObj == null)
                 char1nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
             if (char2nameObj == null)
@@ -379,34 +353,6 @@ namespace QoL
                 if (char4nameObj)
                     char4name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
             }
-
-            //if (cdText == null)
-            //{
-            //    cdText = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)/CD").GetComponent<SimpleText>();
-            //}
-
-
-            //// debug
-            //if (char1)
-            //    Debug.Log($"char1: {char1.name}");
-            //if (char2)
-            //    Debug.Log($"char1: {char2.name}");
-            //if (char3)
-            //    Debug.Log($"char1: {char3.name}");
-            //if (char4)
-            //    Debug.Log($"char1: {char4.name}");
-
-            //if (cdText)
-            //    Debug.Log($"cdText: {cdText.transform.name}");
-
-            //if (char1select)
-            //    Debug.Log($"char1: {char1select.name}");
-            //if (char2select)
-            //    Debug.Log($"char1: {char2select.name}");
-            //if (char3select)
-            //    Debug.Log($"char1: {char3select.name}");
-            //if (char4select)
-            //    Debug.Log($"char1: {char4select.name}");
         }
         public static GameObject FindObject(GameObject parent, string name)
         {

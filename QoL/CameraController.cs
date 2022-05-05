@@ -13,18 +13,12 @@ namespace QoL
         {
             ClassInjector.DerivedConstructorBody(this);
         }
-
-        //private Transform _target;
-
-        public void Start()
-        {
-            //_target = activeAvatar.transform;
-        }
-
         public void Update()
         {
-            transform.rotation = maincam.transform.rotation;
-            transform.position = _target.position + new Vector3(0, 1f, 0) - transform.forward * _distanceFromTarget;
+            if (maincam)
+                transform.rotation = maincam.transform.rotation;
+            if (_target)
+                transform.position = _target.position + new Vector3(xOffset, yOffset, zOffset) - transform.forward * _distanceFromTarget;
         }
     }
 }

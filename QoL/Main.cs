@@ -32,7 +32,10 @@ namespace QoL
         public static GameObject camTarget;
 
         public static Transform _target;
-        public static float _distanceFromTarget = 15.0f;
+        public static float _distanceFromTarget = 20f;
+        public static float xOffset = 0;
+        public static float yOffset = 1.5f;
+        public static float zOffset = 0;
 
 
         public static Camera maincam;
@@ -57,6 +60,7 @@ namespace QoL
 
 
         public static GUILayoutOption[] buttonSize;
+        public static GUILayoutOption[] buttonSize2;
 
         public static string UIDText = "Press Ctrl + ` to edit your UID";
 
@@ -64,7 +68,7 @@ namespace QoL
         private static float uiScale = 1;
         private static float xAlign = 10;
 
-        private static int winW = 150;
+        private static int winW = 250;
         private static int winH = 50;
         public Rect windowRect = new Rect((Screen.width - winW) / 2, (Screen.height - winH) / 2, winW, winH);
 
@@ -88,28 +92,65 @@ namespace QoL
                     GUILayout.Width(40),
                     GUILayout.Height(20)
                 };
+                buttonSize2 = new GUILayoutOption[]
+                {
+                    GUILayout.Width(60),
+                    GUILayout.Height(20)
+                };
                 enableTxt = GUILayout.Toggle(enableTxt, "Fast Text Speed", new GUILayoutOption[0]);
                 enableCutscene = GUILayout.Toggle(enableCutscene, "Fast Cutscene Speed", new GUILayoutOption[0]);
+                enableCam = GUILayout.Toggle(enableCam, "Custom Camera Distance", new GUILayoutOption[0]);
+
+                GUILayout.Space(20);
+
+                GUILayout.Label("Settings", new GUILayoutOption[0]);
 
                 GUILayout.Space(10);
 
-                enableCam = GUILayout.Toggle(enableCam, $"Custom Camera Distance: {_distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.Label($"Camera Distance: {_distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
                 _distanceFromTarget = GUILayout.HorizontalSlider(_distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
-                if (GUILayout.Button("Reset", buttonSize))
+                if (GUILayout.Button("Reset", buttonSize2))
                     _distanceFromTarget = 15f;
                 if (GUILayout.Button("-", buttonSize))
-                    _distanceFromTarget -= 1f;
+                    _distanceFromTarget -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
-                    _distanceFromTarget += 1f;
+                    _distanceFromTarget += 0.1f;
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Reset", buttonSize2))
+                    xOffset = 0f;
+                if (GUILayout.Button("-", buttonSize))
+                    xOffset -= 0.1f;
+                if (GUILayout.Button("+", buttonSize))
+                    xOffset += 0.1f;
+                GUILayout.Label($"X Offset: {xOffset.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Reset", buttonSize2))
+                    yOffset = 1.5f;
+                if (GUILayout.Button("-", buttonSize))
+                    yOffset -= 0.1f;
+                if (GUILayout.Button("+", buttonSize))
+                    yOffset += 0.1f;
+                GUILayout.Label($"Y Offset: {yOffset.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Reset", buttonSize2))
+                    zOffset = 0f;
+                if (GUILayout.Button("-", buttonSize))
+                    zOffset -= 0.1f;
+                if (GUILayout.Button("+", buttonSize))
+                    zOffset += 0.1f;
+                GUILayout.Label($"Z Offset: {zOffset.ToString("F1")}", new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
 
-                GUILayout.Space(20);
+                GUILayout.Space(10);
 
                 GUILayout.Label("UID", new GUILayoutOption[0]);
                 UIDText = GUILayout.TextField(UIDText, new GUILayoutOption[0]);
 
-                GUILayout.Space(20);
+                GUILayout.Space(10);
 
                 GUILayout.Label($"FPS Limit: {targetFPS}", new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
@@ -168,16 +209,25 @@ namespace QoL
             if (showMenu == true)
                 Focused = false;
 
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
-                showCD = !showCD;
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
                 showMenu = !showMenu;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+                showCD = !showCD;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
+                enableCam = !enableCam;
+
 
             // Cam
             if (enableCam)
-                EnableCam();
+            {
+                if (!CamIsActive)
+                    EnableCam();
+            }
             else
-                DisableCam();
+            {
+                if (CamIsActive)
+                    DisableCam();
+            }
 
             // FIND
             if (maincamObj == null)
@@ -239,6 +289,12 @@ namespace QoL
                 if (UID2.GetComponent<Text>().m_Text != UIDText)
                     UID2.GetComponent<Text>().m_Text = UIDText;
             }
+
+            // LIMITER
+            if (_distanceFromTarget < -5f)
+                _distanceFromTarget = -5f;
+            if (_distanceFromTarget > 100f)
+                _distanceFromTarget = 100f;
         }
         public void ToggleHUD()
         {

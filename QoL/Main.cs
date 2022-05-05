@@ -36,9 +36,11 @@ namespace QoL
         public static float xOffset = 0;
         public static float yOffset = 1.5f;
         public static float zOffset = 0;
+        public static float newcamFOV = 45f;
 
 
         public static Camera maincam;
+        public static Camera newcam;
         public static GameObject maincamObj;
         public static GameObject newcamObj;
 
@@ -70,7 +72,7 @@ namespace QoL
 
         private static int winW = 250;
         private static int winH = 50;
-        public Rect windowRect = new Rect((Screen.width - winW) / 2, (Screen.height - winH) / 2, winW, winH);
+        public Rect windowRect = new Rect((Screen.width - winW) / 2, Screen.height / 3, winW, winH);
 
         public void Start()
         {
@@ -116,6 +118,16 @@ namespace QoL
                     _distanceFromTarget -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
                     _distanceFromTarget += 0.1f;
+                GUILayout.EndHorizontal();
+                GUILayout.Label($"Field of View: {newcamFOV.ToString("F0")}", new GUILayoutOption[0]);
+                newcamFOV = GUILayout.HorizontalSlider(newcamFOV, 1f, 160f, new GUILayoutOption[0]);
+                GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+                if (GUILayout.Button("Reset", buttonSize2))
+                    newcamFOV = 45f;
+                if (GUILayout.Button("-", buttonSize))
+                    newcamFOV -= 1f;
+                if (GUILayout.Button("+", buttonSize))
+                    newcamFOV += 1f;
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
@@ -217,7 +229,7 @@ namespace QoL
                 enableCam = !enableCam;
 
 
-            // Cam
+            // CAM
             if (enableCam)
             {
                 if (!CamIsActive)
@@ -259,6 +271,12 @@ namespace QoL
                         newcamObj.AddComponent<CameraController>();
                 }
             }
+            if (newcamObj)
+            {
+                if (newcam == null)
+                    newcam = newcamObj.GetComponent<Camera>();
+            }
+                
 
             // SET
             if (enableTxt)
@@ -290,11 +308,15 @@ namespace QoL
                     UID2.GetComponent<Text>().m_Text = UIDText;
             }
 
-            // LIMITER
+            // LIMITERS
             if (_distanceFromTarget < -5f)
                 _distanceFromTarget = -5f;
             if (_distanceFromTarget > 100f)
                 _distanceFromTarget = 100f;
+            if (newcamFOV < 1f)
+                newcamFOV = 1f;
+            if (newcamFOV > 160f)
+                newcamFOV = 160f;
         }
         public void ToggleHUD()
         {
@@ -365,29 +387,20 @@ namespace QoL
 
         public void EnableCam()
         {
-            if (maincamObj)
+            if (maincamObj && newcamObj && maincam)
             {
-                if (newcamObj)
-                {
-                    if (maincam)
-                    {
-                        newcamObj.SetActive(true);
-                        maincamObj.SetActive(false);
-                        CamIsActive = true;
-                    }
-                }
+                newcamObj.SetActive(true);
+                maincamObj.SetActive(false);
+                CamIsActive = true;
             }
         }
         public void DisableCam()
         {
-            if (maincamObj)
+            if (maincamObj && newcamObj)
             {
-                if (newcamObj)
-                {
-                    newcamObj.SetActive(false);
-                    maincamObj.SetActive(true);
-                    CamIsActive = false;
-                }
+                newcamObj.SetActive(false);
+                maincamObj.SetActive(true);
+                CamIsActive = false;
             }
         }
     }

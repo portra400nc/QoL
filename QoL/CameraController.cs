@@ -15,6 +15,8 @@ namespace QoL
         }
         public void Update()
         {
+            if (newcam)
+                newcam.fieldOfView = newcamFOV;
             if (maincam)
                 transform.rotation = maincam.transform.rotation;
             if (_target)

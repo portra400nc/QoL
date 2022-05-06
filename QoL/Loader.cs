@@ -31,15 +31,12 @@ namespace QoL
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+            if (Input.GetKeyDown(KeyCode.BackQuote) && isRunning == null)
             {
-                if (isRunning == null)
-                {
-                    isRunning = new GameObject();
-                    isRunning.AddComponent<Cooldown>();
-                    isRunning.AddComponent<Main>();
-                    GameObject.DontDestroyOnLoad(isRunning);
-                }
+                isRunning = new GameObject();
+                isRunning.AddComponent<Cooldown>();
+                isRunning.AddComponent<Main>();
+                GameObject.DontDestroyOnLoad(isRunning);
             }
         }
     }

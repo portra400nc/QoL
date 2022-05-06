@@ -31,8 +31,8 @@ namespace QoL
         public static GameObject AvatarRoot;
         public static GameObject camTarget;
 
-        public static Transform _target;
-        public static float _distanceFromTarget = 20f;
+        public static Transform newcamTarget;
+        public static float distanceFromTarget = 20f;
         public static float xOffset = 0;
         public static float yOffset = 1.5f;
         public static float zOffset = 0;
@@ -68,7 +68,6 @@ namespace QoL
 
         private static bool isVisible = true;
         private static float uiScale = 1;
-        private static float xAlign = 10;
 
         private static int winW = 250;
         private static int winH = 50;
@@ -109,15 +108,15 @@ namespace QoL
 
                 GUILayout.Space(10);
 
-                GUILayout.Label($"Camera Distance: {_distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
-                _distanceFromTarget = GUILayout.HorizontalSlider(_distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
+                GUILayout.Label($"Camera Distance: {distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
+                distanceFromTarget = GUILayout.HorizontalSlider(distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
-                    _distanceFromTarget = 20f;
+                    distanceFromTarget = 20f;
                 if (GUILayout.Button("-", buttonSize))
-                    _distanceFromTarget -= 0.1f;
+                    distanceFromTarget -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
-                    _distanceFromTarget += 0.1f;
+                    distanceFromTarget += 0.1f;
                 GUILayout.EndHorizontal();
                 GUILayout.Label($"Field of View: {newcamFOV.ToString("F0")}", new GUILayoutOption[0]);
                 newcamFOV = GUILayout.HorizontalSlider(newcamFOV, 1f, 160f, new GUILayoutOption[0]);
@@ -181,29 +180,10 @@ namespace QoL
         {
             for (; ; )
             {
-                // FIND
-                if (TopRight == null)
-                    TopRight = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/GrpMainBtn/GrpMainToggle");
-                if (TopLeft == null)
-                    TopLeft = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/GrpButtons");
-                if (Quest == null)
-                    Quest = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/BtnToggleQuest");
-                if (PlayerProfile == null)
-                    PlayerProfile = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/BtnPlayerProfile");
-                if (Latency == null)
-                    Latency = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/NetworkLatency");
-                if (Chat == null)
-                    Chat = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/Chat/Content");
-                if (enableTxt)
-                {
-                    if (Txt == null)
-                        Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
-                }
-                if (enableCutscene)
-                {
-                    if (Cutscene == null)
-                        Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
-                }
+                if (enableTxt && Txt == null)
+                    Txt = GameObject.Find("/Canvas/Dialogs/DialogLayer(Clone)/TalkDialog/GrpTalk/GrpConversation/TalkGrpConversation_1(Clone)/Content/TxtDesc");
+                if (enableCutscene && Cutscene == null)
+                    Cutscene = GameObject.Find("/Canvas/Pages/InLevelCutScenePage");
                 if (UID == null)
                     UID = GameObject.Find("/BetaWatermarkCanvas(Clone)/Panel/TxtUID");
                 if (UID2 == null)
@@ -214,39 +194,38 @@ namespace QoL
 
         public void Update()
         {
-            // HOTKEY
-            if (Input.GetKeyDown(KeyCode.BackQuote))
-                ToggleHUD();
-
             if (showMenu == true)
                 Focused = false;
 
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
-                showMenu = !showMenu;
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
-                showCD = !showCD;
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
-                enableCam = !enableCam;
+            UpdateInput();
+            FindObjects();
+            CamComponents();
+            SetTextSpeed();
+            SetCutsceneSpeed();
+            SetUID();
+            SetLimiters();
+            if (maincamObj && newcamObj && maincam)
+                SetCam();
+        }
 
-
-            // CAM
-            if (enableCam)
-            {
-                if (!CamIsActive)
-                    EnableCam();
-            }
-            else
-            {
-                if (CamIsActive)
-                    DisableCam();
-            }
-
-            // FIND
+        private void FindObjects()
+        {
             if (maincamObj == null)
                 maincamObj = GameObject.Find("/EntityRoot/MainCamera(Clone)");
-
             if (AvatarRoot == null)
                 AvatarRoot = GameObject.Find("/EntityRoot/AvatarRoot");
+            if (TopRight == null)
+                TopRight = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/GrpMainBtn/GrpMainToggle");
+            if (TopLeft == null)
+                TopLeft = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/GrpButtons");
+            if (Quest == null)
+                Quest = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/BtnToggleQuest");
+            if (PlayerProfile == null)
+                PlayerProfile = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/BtnPlayerProfile");
+            if (Latency == null)
+                Latency = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/NetworkLatency");
+            if (Chat == null)
+                Chat = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/Chat/Content");
 
             if (AvatarRoot)
             {
@@ -259,6 +238,28 @@ namespace QoL
                 }
                 catch { }
             }
+        }
+
+        private void SetCam()
+        {
+            if (enableCam)
+            {
+                if (!CamIsActive)
+                    EnableCam();
+            }
+            else
+            {
+                if (CamIsActive)
+                    DisableCam();
+            }
+            if (CamIsActive && maincamObj.activeInHierarchy)
+                EnableCam();
+            if (!CamIsActive && newcamObj.activeInHierarchy)
+                DisableCam();
+        }
+
+        private static void CamComponents()
+        {
             if (maincamObj)
             {
                 if (maincam == null)
@@ -276,85 +277,99 @@ namespace QoL
                 if (newcam == null)
                     newcam = newcamObj.GetComponent<Camera>();
             }
-                
+        }
 
-            // SET
-            if (enableTxt)
-            {
-                if (Txt)
-                {
-                    if (Txt.GetComponent<MonoTypewriter>()._secondPerChar != 0.00001f)
-                        Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
-                }
-            }
-            if (enableCutscene)
-            {
-                if (Cutscene)
-                {
-                    if (Cutscene.activeInHierarchy)
-                        Time.timeScale = 5f;
-                    else
-                        Time.timeScale = 1f;
-                }
-            }
-            if (UID)
-            {
-                if (UID.GetComponent<Text>().text != UIDText)
-                    UID.GetComponent<Text>().text = UIDText;
-            }
-            if (UID2)
-            {
-                if (UID2.GetComponent<Text>().m_Text != UIDText)
-                    UID2.GetComponent<Text>().m_Text = UIDText;
-            }
+        private void UpdateInput()
+        {
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+                ToggleHUD();
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.BackQuote))
+                showMenu = !showMenu;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+                showCD = !showCD;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
+                enableCam = !enableCam;
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                distanceFromTarget--;
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                distanceFromTarget++;
+        }
 
-            // LIMITERS
-            if (_distanceFromTarget < -5f)
-                _distanceFromTarget = -5f;
-            if (_distanceFromTarget > 100f)
-                _distanceFromTarget = 100f;
+        private static void SetLimiters()
+        {
+            if (distanceFromTarget < -5f)
+                distanceFromTarget = -5f;
+            if (distanceFromTarget > 100f)
+                distanceFromTarget = 100f;
             if (newcamFOV < 1f)
                 newcamFOV = 1f;
             if (newcamFOV > 160f)
                 newcamFOV = 160f;
         }
+
+        private static void SetTextSpeed()
+        {
+            if (enableTxt && Txt && Txt.GetComponent<MonoTypewriter>()._secondPerChar != 0.00001f)
+                Txt.GetComponent<MonoTypewriter>()._secondPerChar = 0.00001f;
+        }
+
+        private static void SetCutsceneSpeed()
+        {
+            if (enableCutscene && Cutscene)
+            {
+                if (Cutscene.activeInHierarchy)
+                    Time.timeScale = 5f;
+                else
+                    Time.timeScale = 1f;
+            }
+        }
+
+        private static void SetUID()
+        {
+            if (UID && UID.GetComponent<Text>().text != UIDText)
+                UID.GetComponent<Text>().text = UIDText;
+            if (UID2 && UID2.GetComponent<Text>().m_Text != UIDText)
+                UID2.GetComponent<Text>().m_Text = UIDText;
+        }
+
         public void ToggleHUD()
         {
-            if (isVisible == true)
+            switch (isVisible)
             {
-                if (TopRight)
-                    TopRight.transform.localScale = new Vector3(0, 0, 0);
-                if (TopLeft)
-                    TopLeft.transform.localScale = new Vector3(0, 0, 0);
-                if (Quest)
-                    Quest.transform.localScale = new Vector3(0, 0, 0);
-                if (PlayerProfile)
-                    PlayerProfile.transform.localScale = new Vector3(0, 0, 0);
-                if (Latency)
-                    Latency.transform.localScale = new Vector3(0, 0, 0);
-                if (Chat)
-                    Chat.transform.localScale = new Vector3(0, 0, 0);
-                if (UID)
-                    UID.transform.localScale = new Vector3(0, 0, 0);
-                isVisible = false;
-            }
-            else
-            {
-                if (TopRight)
-                    TopRight.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (TopLeft)
-                    TopLeft.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (Quest)
-                    Quest.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (PlayerProfile)
-                    PlayerProfile.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (Latency)
-                    Latency.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (Chat)
-                    Chat.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                if (UID)
-                    UID.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
-                isVisible = true;
+                case true:
+                    if (TopRight)
+                        TopRight.transform.localScale = new Vector3(0, 0, 0);
+                    if (TopLeft)
+                        TopLeft.transform.localScale = new Vector3(0, 0, 0);
+                    if (Quest)
+                        Quest.transform.localScale = new Vector3(0, 0, 0);
+                    if (PlayerProfile)
+                        PlayerProfile.transform.localScale = new Vector3(0, 0, 0);
+                    if (Latency)
+                        Latency.transform.localScale = new Vector3(0, 0, 0);
+                    if (Chat)
+                        Chat.transform.localScale = new Vector3(0, 0, 0);
+                    if (UID)
+                        UID.transform.localScale = new Vector3(0, 0, 0);
+                    isVisible = false;
+                    break;
+                default:
+                    if (TopRight)
+                        TopRight.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (TopLeft)
+                        TopLeft.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (Quest)
+                        Quest.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (PlayerProfile)
+                        PlayerProfile.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (Latency)
+                        Latency.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (Chat)
+                        Chat.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (UID)
+                        UID.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    isVisible = true;
+                    break;
             }
         }
         static bool Focused
@@ -379,7 +394,7 @@ namespace QoL
                 Transform active = a.Cast<Transform>();
                 if (active.gameObject.activeInHierarchy)
                 {
-                    _target = active;
+                    newcamTarget = active;
                     activeAvatar = active.gameObject;
                 }
             }

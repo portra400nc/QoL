@@ -19,8 +19,8 @@ namespace QoL
                 newcam.fieldOfView = newcamFOV;
             if (maincam)
                 transform.rotation = maincam.transform.rotation;
-            if (_target)
-                transform.position = _target.position + new Vector3(xOffset, yOffset, zOffset) - transform.forward * _distanceFromTarget;
+            if (newcamTarget)
+                transform.position = newcamTarget.position + new Vector3(xOffset, yOffset, zOffset) - transform.forward * distanceFromTarget;
         }
     }
 }

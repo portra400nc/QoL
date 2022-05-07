@@ -16,114 +16,119 @@ namespace QoL
             ClassInjector.DerivedConstructorBody(this);
         }
 
-        public static GameObject char1;
-        public static GameObject char2;
-        public static GameObject char3;
-        public static GameObject char4;
+        public static GameObject Char1;
+        public static GameObject Char2;
+        public static GameObject Char3;
+        public static GameObject Char4;
 
-        public static Text char1name;
-        public static Text char2name;
-        public static Text char3name;
-        public static Text char4name;
+        public static Text Char1Name;
+        public static Text Char2Name;
+        public static Text Char3Name;
+        public static Text Char4Name;
 
-        public static GameObject char1nameObj;
-        public static GameObject char2nameObj;
-        public static GameObject char3nameObj;
-        public static GameObject char4nameObj;
+        public static GameObject Char1NameObj;
+        public static GameObject Char2NameObj;
+        public static GameObject Char3NameObj;
+        public static GameObject Char4NameObj;
 
-        public static GameObject char1select;
-        public static GameObject char2select;
-        public static GameObject char3select;
-        public static GameObject char4select;
-        public static MonoBattleBtn isReady;
-        public static MonoBattleBtn bisReady;
+        public static GameObject Char1Select;
+        public static GameObject Char2Select;
+        public static GameObject Char3Select;
+        public static GameObject Char4Select;
+        public static MonoBattleBtn IsReady;
+        public static MonoBattleBtn BisReady;
 
-        public static GameObject isReadyObj;
-        public static GameObject bisReadyPC;
-        public static GameObject bisReadyCon;
+        public static GameObject IsReadyObj;
+        public static GameObject BisReadyPC;
+        public static GameObject BisReadyCon;
 
-        public static float modHeight = 100f;
+        public static float Char1Timer;
+        public static float Char2Timer;
+        public static float Char3Timer;
+        public static float Char4Timer;
 
-        public static float char1timer = 0;
-        public static float char2timer = 0;
-        public static float char3timer = 0;
-        public static float char4timer = 0;
+        public static float Char1Btimer;
+        public static float Char2Btimer;
+        public static float Char3Btimer;
+        public static float Char4Btimer;
 
-        public static float char1btimer = 0;
-        public static float char2btimer = 0;
-        public static float char3btimer = 0;
-        public static float char4btimer = 0;
+        public static GameObject Char1Bstate;
+        public static GameObject Char2Bstate;
+        public static GameObject Char3Bstate;
+        public static GameObject Char4Bstate;
 
-        public static GameObject char1bstate;
-        public static GameObject char2bstate;
-        public static GameObject char3bstate;
-        public static GameObject char4bstate;
+        public static string Char1Bisready = "X";
+        public static string Char2Bisready = "X";
+        public static string Char3Bisready = "X";
+        public static string Char4Bisready = "X";
 
-        public static string char1bisready = "X";
-        public static string char2bisready = "X";
-        public static string char3bisready = "X";
-        public static string char4bisready = "X";
-
-        public static float xAlign = 0f;
-
-        public static int winW = 240;
-        public static int winH = 100;
-        public Rect windowRect = new Rect(20, (Screen.height - winH) / 2, winW, winH);
+        public static int WinW = 240;
+        public static int WinH = 100;
+        public Rect windowRect = new Rect(20, (Screen.height - WinH) / 2, WinW, WinH);
 
         public void OnGUI()
         {
             if (showCD)
-                windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CDWindow, "Cooldown");
+                windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CdWindow, "Cooldown");
         }
-        public void CDWindow(int id)
+        public void CdWindow(int id)
         {
             if (id == 1)
             {
-                GUIStyle style = new GUIStyle
+                var style = new GUIStyle
                 {
-                    alignment = TextAnchor.MiddleCenter
+                    alignment = TextAnchor.MiddleCenter,
+                    normal =
+                    {
+                        textColor = Color.white
+                    }
                 };
-                style.normal.textColor = Color.white;
 
-                GUIStyle style2 = new GUIStyle
+                var style2 = new GUIStyle
                 {
-                    alignment = TextAnchor.MiddleLeft
+                    alignment = TextAnchor.MiddleLeft,
+                    normal =
+                    {
+                        textColor = Color.white
+                    }
                 };
-                style2.normal.textColor = Color.white;
 
-                GUIStyle style3 = new GUIStyle
+                var style3 = new GUIStyle
                 {
-                    alignment = TextAnchor.MiddleRight
+                    alignment = TextAnchor.MiddleRight,
+                    normal =
+                    {
+                        textColor = Color.white
+                    }
                 };
-                style3.normal.textColor = Color.white;
 
-                if (char1name)
+                if (Char1Name)
                 {
-                    GUI.Label(new Rect(10, 10, 150, 30), $"{char1name.m_Text}", style2);
-                    GUI.Label(new Rect(80, 10, 150, 30), $"{char1timer.ToString("F1")}", style);
-                    GUI.Label(new Rect(80, 10, 150, 30), $"{char1btimer.ToString("F1")} {char1bisready}", style3);
+                    GUI.Label(new Rect(10, 10, 150, 30), $"{Char1Name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 10, 150, 30), $"{Char1Timer:F1}", style);
+                    GUI.Label(new Rect(80, 10, 150, 30), $"{Char1Btimer:F1} {Char1Bisready}", style3);
                 }
 
-                if (char2name)
+                if (Char2Name)
                 {
-                    GUI.Label(new Rect(10, 30, 150, 30), $"{char2name.m_Text}", style2);
-                    GUI.Label(new Rect(80, 30, 150, 30), $"{char2timer.ToString("F1")}", style);
-                    GUI.Label(new Rect(80, 30, 150, 30), $"{char2btimer.ToString("F1")} {char2bisready}", style3);
+                    GUI.Label(new Rect(10, 30, 150, 30), $"{Char2Name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 30, 150, 30), $"{Char2Timer:F1}", style);
+                    GUI.Label(new Rect(80, 30, 150, 30), $"{Char2Btimer:F1} {Char2Bisready}", style3);
                 }
 
-                if (char3name)
+                if (Char3Name)
                 {
-                    GUI.Label(new Rect(10, 50, 150, 30), $"{char3name.m_Text}", style2);
-                    GUI.Label(new Rect(80, 50, 150, 30), $"{char3timer.ToString("F1")}", style);
-                    GUI.Label(new Rect(80, 50, 150, 30), $"{char3btimer.ToString("F1")} {char3bisready}", style3);
+                    GUI.Label(new Rect(10, 50, 150, 30), $"{Char3Name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 50, 150, 30), $"{Char3Timer:F1}", style);
+                    GUI.Label(new Rect(80, 50, 150, 30), $"{Char3Btimer:F1} {Char3Bisready}", style3);
 
                 }
 
-                if (char4name)
+                if (Char4Name)
                 {
-                    GUI.Label(new Rect(10, 70, 150, 30), $"{char4name.m_Text}", style2);
-                    GUI.Label(new Rect(80, 70, 150, 30), $"{char4timer.ToString("F1")}", style);
-                    GUI.Label(new Rect(80, 70, 150, 30), $"{char4btimer.ToString("F1")} {char4bisready}", style3);
+                    GUI.Label(new Rect(10, 70, 150, 30), $"{Char4Name.m_Text}", style2);
+                    GUI.Label(new Rect(80, 70, 150, 30), $"{Char4Timer:F1}", style);
+                    GUI.Label(new Rect(80, 70, 150, 30), $"{Char4Btimer:F1} {Char4Bisready}", style3);
                 }
 
             }
@@ -142,203 +147,191 @@ namespace QoL
 
         private static void FindSkillIndicator()
         {
-            if (isReadyObj == null)
-                isReadyObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)");
+            if (IsReadyObj == null)
+                IsReadyObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)");
 
-            if (isReady == null && isReadyObj)
+            if (IsReady == null && IsReadyObj)
             {
-                isReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
+                IsReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
             }
         }
 
         private static void SetBurstIndicator()
         {
-            if (char1bstate)
+            if (Char1Bstate)
             {
-                if (char1bstate.activeInHierarchy)
-                    char1bisready = "O";
-                else
-                    char1bisready = "X";
+                Char1Bisready = Char1Bstate.activeInHierarchy ? "O" : "X";
             }
-            if (char2bstate)
+            if (Char2Bstate)
             {
-                if (char2bstate.activeInHierarchy)
-                    char2bisready = "O";
-                else
-                    char2bisready = "X";
+                Char2Bisready = Char2Bstate.activeInHierarchy ? "O" : "X";
             }
-            if (char3bstate)
+            if (Char3Bstate)
             {
-                if (char3bstate.activeInHierarchy)
-                    char3bisready = "O";
-                else
-                    char3bisready = "X";
+                Char3Bisready = Char3Bstate.activeInHierarchy ? "O" : "X";
             }
-            if (char4bstate)
+            if (Char4Bstate)
             {
-                if (char4bstate.activeInHierarchy)
-                    char4bisready = "O";
-                else
-                    char4bisready = "X";
+                Char4Bisready = Char4Bstate.activeInHierarchy ? "O" : "X";
             }
         }
 
         private static void FindCharacters()
         {
-            if (char1 == null)
-                char1 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0");
-            if (char2 == null)
-                char2 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1");
-            if (char3 == null)
-                char3 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2");
-            if (char4 == null)
-                char4 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3");
+            if (Char1 == null)
+                Char1 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0");
+            if (Char2 == null)
+                Char2 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1");
+            if (Char3 == null)
+                Char3 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2");
+            if (Char4 == null)
+                Char4 = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3");
 
-            if (char1select == null && char1)
-                char1select = FindObject(char1, "Eff_UI_Pressed");
-            if (char2select == null && char2)
-                char2select = FindObject(char2, "Eff_UI_Pressed");
-            if (char3select == null && char3)
-                char3select = FindObject(char3, "Eff_UI_Pressed");
-            if (char4select == null && char4)
-                char4select = FindObject(char4, "Eff_UI_Pressed");
+            if (Char1Select == null && Char1)
+                Char1Select = FindObject(Char1, "Eff_UI_Pressed");
+            if (Char2Select == null && Char2)
+                Char2Select = FindObject(Char2, "Eff_UI_Pressed");
+            if (Char3Select == null && Char3)
+                Char3Select = FindObject(Char3, "Eff_UI_Pressed");
+            if (Char4Select == null && Char4)
+                Char4Select = FindObject(Char4, "Eff_UI_Pressed");
         }
 
         private static void FindBurstIndicator()
         {
-            if (char1bstate == null && char1)
-                char1bstate = FindObject(char1, "EC_Btn");
-            if (char2bstate == null && char2)
-                char2bstate = FindObject(char2, "EC_Btn");
-            if (char3bstate == null && char3)
-                char3bstate = FindObject(char3, "EC_Btn");
-            if (char4bstate == null && char4)
-                char4bstate = FindObject(char4, "EC_Btn");
+            if (Char1Bstate == null && Char1)
+                Char1Bstate = FindObject(Char1, "EC_Btn");
+            if (Char2Bstate == null && Char2)
+                Char2Bstate = FindObject(Char2, "EC_Btn");
+            if (Char3Bstate == null && Char3)
+                Char3Bstate = FindObject(Char3, "EC_Btn");
+            if (Char4Bstate == null && Char4)
+                Char4Bstate = FindObject(Char4, "EC_Btn");
 
-            if (bisReadyPC == null)
-                bisReadyPC = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
-            if (bisReadyCon == null)
-                bisReadyCon = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
+            if (BisReadyPC == null)
+                BisReadyPC = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
+            if (BisReadyCon == null)
+                BisReadyCon = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
 
-            if (bisReady == null)
+            if (BisReady == null)
             {
-                if (bisReadyPC)
-                    bisReady = bisReadyPC.GetComponent<MonoBattleBtn>();
-                else if (bisReadyCon)
-                    bisReady = bisReadyCon.GetComponent<MonoBattleBtn>();
+                if (BisReadyPC)
+                    BisReady = BisReadyPC.GetComponent<MonoBattleBtn>();
+                else if (BisReadyCon)
+                    BisReady = BisReadyCon.GetComponent<MonoBattleBtn>();
             }
         }
 
         private static void FindCharacterNames()
         {
-            if (char1nameObj == null)
-                char1nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
-            if (char2nameObj == null)
-                char2nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText");
-            if (char3nameObj == null)
-                char3nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText");
-            if (char4nameObj == null)
-                char4nameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText");
+            if (Char1NameObj == null)
+                Char1NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
+            if (Char2NameObj == null)
+                Char2NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText");
+            if (Char3NameObj == null)
+                Char3NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText");
+            if (Char4NameObj == null)
+                Char4NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText");
 
-            if (char1name == null && char1nameObj)
-                char1name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
-            if (char2name == null && char2nameObj)
-                char2name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText").GetComponent<Text>();
-            if (char3name == null && char3nameObj)
-                char3name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText").GetComponent<Text>();
-            if (char4name == null && char4nameObj)
-                char4name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
+            if (Char1Name == null && Char1NameObj)
+                Char1Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
+            if (Char2Name == null && Char2NameObj)
+                Char2Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText").GetComponent<Text>();
+            if (Char3Name == null && Char3NameObj)
+                Char3Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText").GetComponent<Text>();
+            if (Char4Name == null && Char4NameObj)
+                Char4Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
         }
 
         private static void SetBurstTimer()
         {
-            if (bisReady && bisReady.GPGMMHJKEJM == 0)
+            if (BisReady && BisReady.GPGMMHJKEJM == 0)
             {
-                if (char1select && char1select.activeInHierarchy)
+                if (Char1Select && Char1Select.activeInHierarchy)
                 {
-                    char1btimer = bisReady.FODDLLMGGNB;
+                    Char1Btimer = BisReady.FODDLLMGGNB;
                 }
-                if (char2select && char2select.activeInHierarchy)
+                if (Char2Select && Char2Select.activeInHierarchy)
                 {
-                    char2btimer = bisReady.FODDLLMGGNB;
+                    Char2Btimer = BisReady.FODDLLMGGNB;
                 }
-                if (char3select && char3select.activeInHierarchy)
+                if (Char3Select && Char3Select.activeInHierarchy)
                 {
-                    char3btimer = bisReady.FODDLLMGGNB;
+                    Char3Btimer = BisReady.FODDLLMGGNB;
                 }
-                if (char4select && char4select.activeInHierarchy)
+                if (Char4Select && Char4Select.activeInHierarchy)
                 {
-                    char4btimer = bisReady.FODDLLMGGNB;
+                    Char4Btimer = BisReady.FODDLLMGGNB;
                 }
             }
-            if (char1btimer > 0)
-                char1btimer -= Time.deltaTime;
-            if (char1btimer < 0)
-                char1btimer = 0.00f;
+            if (Char1Btimer > 0)
+                Char1Btimer -= Time.deltaTime;
+            if (Char1Btimer < 0)
+                Char1Btimer = 0.00f;
 
-            if (char2btimer > 0)
-                char2btimer -= Time.deltaTime;
-            if (char2btimer < 0)
-                char2btimer = 0.00f;
+            if (Char2Btimer > 0)
+                Char2Btimer -= Time.deltaTime;
+            if (Char2Btimer < 0)
+                Char2Btimer = 0.00f;
 
-            if (char3btimer > 0)
-                char3btimer -= Time.deltaTime;
-            if (char3btimer < 0)
-                char3btimer = 0.00f;
+            if (Char3Btimer > 0)
+                Char3Btimer -= Time.deltaTime;
+            if (Char3Btimer < 0)
+                Char3Btimer = 0.00f;
 
-            if (char4btimer > 0)
-                char4btimer -= Time.deltaTime;
-            if (char4btimer < 0)
-                char4btimer = 0.00f;
+            if (Char4Btimer > 0)
+                Char4Btimer -= Time.deltaTime;
+            if (Char4Btimer < 0)
+                Char4Btimer = 0.00f;
         }
 
         private static void SetSkillTimer()
         {
-            if (isReady && isReady.GPGMMHJKEJM == 0)
+            if (IsReady && IsReady.GPGMMHJKEJM == 0)
             {
-                if (char1select && char1select.activeInHierarchy)
+                if (Char1Select && Char1Select.activeInHierarchy)
                 {
-                    char1timer = isReady.FODDLLMGGNB;
+                    Char1Timer = IsReady.FODDLLMGGNB;
                 }
-                if (char2select && char2select.activeInHierarchy)
+                if (Char2Select && Char2Select.activeInHierarchy)
                 {
-                    char2timer = isReady.FODDLLMGGNB;
+                    Char2Timer = IsReady.FODDLLMGGNB;
                 }
-                if (char3select && char3select.activeInHierarchy)
+                if (Char3Select && Char3Select.activeInHierarchy)
                 {
-                    char3timer = isReady.FODDLLMGGNB;
+                    Char3Timer = IsReady.FODDLLMGGNB;
                 }
-                if (char4select && char4select.activeInHierarchy)
+                if (Char4Select && Char4Select.activeInHierarchy)
                 {
-                    char4timer = isReady.FODDLLMGGNB;
+                    Char4Timer = IsReady.FODDLLMGGNB;
                 }
             }
-            if (char1timer > 0)
-                char1timer -= Time.deltaTime;
-            if (char1timer < 0)
-                char1timer = 0.00f;
+            if (Char1Timer > 0)
+                Char1Timer -= Time.deltaTime;
+            if (Char1Timer < 0)
+                Char1Timer = 0.00f;
 
-            if (char2timer > 0)
-                char2timer -= Time.deltaTime;
-            if (char2timer < 0)
-                char2timer = 0.00f;
+            if (Char2Timer > 0)
+                Char2Timer -= Time.deltaTime;
+            if (Char2Timer < 0)
+                Char2Timer = 0.00f;
 
-            if (char3timer > 0)
-                char3timer -= Time.deltaTime;
-            if (char3timer < 0)
-                char3timer = 0.00f;
+            if (Char3Timer > 0)
+                Char3Timer -= Time.deltaTime;
+            if (Char3Timer < 0)
+                Char3Timer = 0.00f;
 
-            if (char4timer > 0)
-                char4timer -= Time.deltaTime;
-            if (char4timer < 0)
-                char4timer = 0.00f;
+            if (Char4Timer > 0)
+                Char4Timer -= Time.deltaTime;
+            if (Char4Timer < 0)
+                Char4Timer = 0.00f;
         }
 
         public static GameObject FindObject(GameObject parent, string name)
         {
             GameObject candidate = null;
             Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
-            foreach (Transform t in trs)
+            foreach (var t in trs)
             {
                 if (t == null)
                 {

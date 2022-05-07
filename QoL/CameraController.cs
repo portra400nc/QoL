@@ -13,14 +13,22 @@ namespace QoL
         {
             ClassInjector.DerivedConstructorBody(this);
         }
+
+        private Transform _mainTransform;
+
+        private void Awake()
+        {
+            _mainTransform = transform;
+        }
+
         public void Update()
         {
             if (newcam)
                 newcam.fieldOfView = newcamFOV;
             if (maincam)
-                transform.rotation = maincam.transform.rotation;
+                _mainTransform.rotation = maincam.transform.rotation;
             if (newcamTarget)
-                transform.position = newcamTarget.position + new Vector3(xOffset, yOffset, zOffset) - transform.forward * distanceFromTarget;
+                _mainTransform.position = newcamTarget.position + new Vector3(xOffset, yOffset, zOffset) - _mainTransform.forward * distanceFromTarget;
         }
     }
 }

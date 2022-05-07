@@ -1,7 +1,7 @@
-﻿using MelonLoader;
-using MoleMole;
-using System;
+﻿using System;
 using System.Collections;
+using MelonLoader;
+using MoleMole;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,23 +19,25 @@ namespace QoL
         public static int targetFPS = 300;
 
         public static bool showCD = true;
-        public static bool showMenu = false;
+        public static bool showMenu;
 
         public static bool enableTxt = true;
         public static bool enableCutscene = true;
         public static bool enableCam = true;
+        public static bool hideMinimap = true;
+        public static bool disableLoadingScreen = true;
+
 
         public static bool CamIsActive;
 
         public static GameObject activeAvatar;
         public static GameObject AvatarRoot;
-        public static GameObject camTarget;
 
         public static Transform newcamTarget;
         public static float distanceFromTarget = 20f;
-        public static float xOffset = 0;
+        public static float xOffset;
         public static float yOffset = 1.5f;
-        public static float zOffset = 0;
+        public static float zOffset;
         public static float newcamFOV = 45f;
 
 
@@ -50,10 +52,7 @@ namespace QoL
         private static GameObject Quest;
         private static GameObject Latency;
         private static GameObject Chat;
-
-        public static GameObject mainCanvas;
-        public static GameObject uidCanvas;
-        public static GameObject dialogCanvas;
+        private static GameObject Minimap;
 
         public static GameObject Txt;
         public static GameObject Cutscene;
@@ -71,7 +70,7 @@ namespace QoL
 
         private static int winW = 250;
         private static int winH = 50;
-        public Rect windowRect = new Rect((Screen.width - winW) / 2, Screen.height / 3, winW, winH);
+        public Rect windowRect = new Rect((Screen.width - winW) / 2, 200, winW, winH);
 
         public void Start()
         {
@@ -88,19 +87,21 @@ namespace QoL
         {
             if (id == 2)
             {
-                buttonSize = new GUILayoutOption[]
+                buttonSize = new[]
                 {
                     GUILayout.Width(40),
                     GUILayout.Height(20)
                 };
-                buttonSize2 = new GUILayoutOption[]
+                buttonSize2 = new[]
                 {
                     GUILayout.Width(60),
                     GUILayout.Height(20)
                 };
                 enableTxt = GUILayout.Toggle(enableTxt, "Fast Text Speed", new GUILayoutOption[0]);
                 enableCutscene = GUILayout.Toggle(enableCutscene, "Fast Cutscene Speed", new GUILayoutOption[0]);
+                hideMinimap = GUILayout.Toggle(hideMinimap, "Hide Minimap", new GUILayoutOption[0]);
                 enableCam = GUILayout.Toggle(enableCam, "Custom Camera Distance", new GUILayoutOption[0]);
+                disableLoadingScreen = GUILayout.Toggle(disableLoadingScreen, "Disable Loading Screens", new GUILayoutOption[0]);
 
                 GUILayout.Space(20);
 
@@ -108,7 +109,7 @@ namespace QoL
 
                 GUILayout.Space(10);
 
-                GUILayout.Label($"Camera Distance: {distanceFromTarget.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.Label($"Camera Distance: {distanceFromTarget:F1}", new GUILayoutOption[0]);
                 distanceFromTarget = GUILayout.HorizontalSlider(distanceFromTarget, -5f, 100f, new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
@@ -118,7 +119,7 @@ namespace QoL
                 if (GUILayout.Button("+", buttonSize))
                     distanceFromTarget += 0.1f;
                 GUILayout.EndHorizontal();
-                GUILayout.Label($"Field of View: {newcamFOV.ToString("F0")}", new GUILayoutOption[0]);
+                GUILayout.Label($"Field of View: {newcamFOV:F0}", new GUILayoutOption[0]);
                 newcamFOV = GUILayout.HorizontalSlider(newcamFOV, 1f, 160f, new GUILayoutOption[0]);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
@@ -135,7 +136,7 @@ namespace QoL
                     xOffset -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
                     xOffset += 0.1f;
-                GUILayout.Label($"X Offset: {xOffset.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.Label($"X Offset: {xOffset:F1}", new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
@@ -144,7 +145,7 @@ namespace QoL
                     yOffset -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
                     yOffset += 0.1f;
-                GUILayout.Label($"Y Offset: {yOffset.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.Label($"Y Offset: {yOffset:F1}", new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 if (GUILayout.Button("Reset", buttonSize2))
@@ -153,7 +154,7 @@ namespace QoL
                     zOffset -= 0.1f;
                 if (GUILayout.Button("+", buttonSize))
                     zOffset += 0.1f;
-                GUILayout.Label($"Z Offset: {zOffset.ToString("F1")}", new GUILayoutOption[0]);
+                GUILayout.Label($"Z Offset: {zOffset:F1}", new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
@@ -176,7 +177,7 @@ namespace QoL
             GUI.DragWindow();
         }
 
-        IEnumerator FindElements()
+        private static IEnumerator FindElements()
         {
             for (; ; )
             {
@@ -194,7 +195,7 @@ namespace QoL
 
         public void Update()
         {
-            if (showMenu == true)
+            if (showMenu)
                 Focused = false;
 
             UpdateInput();
@@ -226,6 +227,8 @@ namespace QoL
                 Latency = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/NetworkLatency");
             if (Chat == null)
                 Chat = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/Chat/Content");
+            if (Minimap == null)
+                Minimap = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/MapInfo/GrpMiniMap");
 
             if (AvatarRoot)
             {
@@ -245,17 +248,17 @@ namespace QoL
             if (enableCam)
             {
                 if (!CamIsActive)
-                    EnableCam();
+                    EnableCustomCam();
             }
             else
             {
                 if (CamIsActive)
-                    DisableCam();
+                    DisableCustomCam();
             }
             if (CamIsActive && maincamObj.activeInHierarchy)
-                EnableCam();
+                EnableCustomCam();
             if (!CamIsActive && newcamObj.activeInHierarchy)
-                DisableCam();
+                DisableCustomCam();
         }
 
         private static void CamComponents()
@@ -267,7 +270,7 @@ namespace QoL
 
                 if (newcamObj == null)
                 {
-                    newcamObj = GameObject.Instantiate(maincamObj);
+                    newcamObj = Instantiate(maincamObj);
                     if (newcamObj.GetComponent<CameraController>() == null)
                         newcamObj.AddComponent<CameraController>();
                 }
@@ -315,13 +318,8 @@ namespace QoL
 
         private static void SetCutsceneSpeed()
         {
-            if (enableCutscene && Cutscene)
-            {
-                if (Cutscene.activeInHierarchy)
-                    Time.timeScale = 5f;
-                else
-                    Time.timeScale = 1f;
-            }
+            if (!enableCutscene || !Cutscene) return;
+            Time.timeScale = Cutscene.activeInHierarchy ? 5f : 1f;
         }
 
         private static void SetUID()
@@ -351,6 +349,8 @@ namespace QoL
                         Chat.transform.localScale = new Vector3(0, 0, 0);
                     if (UID)
                         UID.transform.localScale = new Vector3(0, 0, 0);
+                    if (Minimap)
+                        Minimap.transform.localScale = hideMinimap ? new Vector3(0, 0, 0) : new Vector3(uiScale, uiScale, uiScale);
                     isVisible = false;
                     break;
                 default:
@@ -368,11 +368,14 @@ namespace QoL
                         Chat.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
                     if (UID)
                         UID.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
+                    if (Minimap)
+                        Minimap.transform.localScale = new Vector3(uiScale, uiScale, uiScale);
                     isVisible = true;
                     break;
             }
         }
-        static bool Focused
+
+        private static bool Focused
         {
             get => Cursor.lockState == CursorLockMode.Locked;
             set
@@ -382,7 +385,7 @@ namespace QoL
             }
         }
 
-        public static void SetFPS()
+        private static void SetFPS()
         {
             Application.targetFrameRate = targetFPS;
         }
@@ -391,32 +394,28 @@ namespace QoL
         {
             foreach (var a in AvatarRoot.transform)
             {
-                Transform active = a.Cast<Transform>();
-                if (active.gameObject.activeInHierarchy)
-                {
-                    newcamTarget = active;
-                    activeAvatar = active.gameObject;
-                }
+                var active = a.Cast<Transform>();
+                if (!active.gameObject.activeInHierarchy) continue;
+                newcamTarget = active;
+                activeAvatar = active.gameObject;
             }
         }
 
-        public void EnableCam()
+        public void EnableCustomCam()
         {
-            if (maincamObj && newcamObj && maincam)
-            {
-                newcamObj.SetActive(true);
-                maincamObj.SetActive(false);
-                CamIsActive = true;
-            }
+            if (!maincamObj || !newcamObj || !maincam) return;
+            
+            newcamObj.SetActive(true);
+            maincamObj.SetActive(false);
+            CamIsActive = true;
         }
-        public void DisableCam()
+        public void DisableCustomCam()
         {
-            if (maincamObj && newcamObj)
-            {
-                newcamObj.SetActive(false);
-                maincamObj.SetActive(true);
-                CamIsActive = false;
-            }
+            if (!maincamObj || !newcamObj) return;
+            
+            newcamObj.SetActive(false);
+            maincamObj.SetActive(true);
+            CamIsActive = false;
         }
     }
 }

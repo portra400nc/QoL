@@ -3,18 +3,22 @@ using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
 using MoleMole;
-
 using static QoL.Main;
 
 namespace QoL
 {
     public class Cooldown : MonoBehaviour
     {
-        public Cooldown(IntPtr ptr) : base(ptr) { }
+        public Cooldown(IntPtr ptr) : base(ptr)
+        {
+        }
+
         public Cooldown() : base(ClassInjector.DerivedConstructorPointer<Cooldown>())
         {
             ClassInjector.DerivedConstructorBody(this);
         }
+
+        #region Properties
 
         public static GameObject Char1;
         public static GameObject Char2;
@@ -66,11 +70,14 @@ namespace QoL
         public static int WinH = 100;
         public Rect windowRect = new Rect(20, (Screen.height - WinH) / 2, WinW, WinH);
 
+        #endregion
+
         public void OnGUI()
         {
-            if (showCD)
-                windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction)CdWindow, "Cooldown");
+            if (ShowCd)
+                windowRect = GUI.Window(1, windowRect, (GUI.WindowFunction) CdWindow, "Cooldown");
         }
+
         public void CdWindow(int id)
         {
             if (id == 1)
@@ -121,7 +128,6 @@ namespace QoL
                     GUI.Label(new Rect(10, 50, 150, 30), $"{Char3Name.m_Text}", style2);
                     GUI.Label(new Rect(80, 50, 150, 30), $"{Char3Timer:F1}", style);
                     GUI.Label(new Rect(80, 50, 150, 30), $"{Char3Btimer:F1} {Char3Bisready}", style3);
-
                 }
 
                 if (Char4Name)
@@ -130,10 +136,11 @@ namespace QoL
                     GUI.Label(new Rect(80, 70, 150, 30), $"{Char4Timer:F1}", style);
                     GUI.Label(new Rect(80, 70, 150, 30), $"{Char4Btimer:F1} {Char4Bisready}", style3);
                 }
-
             }
+
             GUI.DragWindow();
         }
+
         public void Update()
         {
             FindCharacters();
@@ -145,34 +152,136 @@ namespace QoL
             SetBurstIndicator();
         }
 
-        private static void FindSkillIndicator()
-        {
-            if (IsReadyObj == null)
-                IsReadyObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)");
+        #region Set
 
-            if (IsReady == null && IsReadyObj)
+        private static void SetSkillTimer()
+        {
+            if (IsReady && IsReady.GPGMMHJKEJM == 0)
             {
-                IsReady = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)").GetComponent<MonoBattleBtn>();
+                if (Char1Select && Char1Select.activeInHierarchy)
+                    Char1Timer = IsReady.FODDLLMGGNB;
+                if (Char2Select && Char2Select.activeInHierarchy)
+                    Char2Timer = IsReady.FODDLLMGGNB;
+                if (Char3Select && Char3Select.activeInHierarchy)
+                    Char3Timer = IsReady.FODDLLMGGNB;
+                if (Char4Select && Char4Select.activeInHierarchy)
+                    Char4Timer = IsReady.FODDLLMGGNB;
             }
+
+            if (Char1Timer > 0)
+                Char1Timer -= Time.deltaTime;
+            if (Char1Timer < 0)
+                Char1Timer = 0.00f;
+
+            if (Char2Timer > 0)
+                Char2Timer -= Time.deltaTime;
+            if (Char2Timer < 0)
+                Char2Timer = 0.00f;
+
+            if (Char3Timer > 0)
+                Char3Timer -= Time.deltaTime;
+            if (Char3Timer < 0)
+                Char3Timer = 0.00f;
+
+            if (Char4Timer > 0)
+                Char4Timer -= Time.deltaTime;
+            if (Char4Timer < 0)
+                Char4Timer = 0.00f;
         }
 
         private static void SetBurstIndicator()
         {
             if (Char1Bstate)
-            {
                 Char1Bisready = Char1Bstate.activeInHierarchy ? "O" : "X";
-            }
             if (Char2Bstate)
-            {
                 Char2Bisready = Char2Bstate.activeInHierarchy ? "O" : "X";
-            }
             if (Char3Bstate)
-            {
                 Char3Bisready = Char3Bstate.activeInHierarchy ? "O" : "X";
-            }
             if (Char4Bstate)
-            {
                 Char4Bisready = Char4Bstate.activeInHierarchy ? "O" : "X";
+        }
+
+        private static void SetBurstTimer()
+        {
+            if (BisReady && BisReady.GPGMMHJKEJM == 0)
+            {
+                if (Char1Select && Char1Select.activeInHierarchy)
+                    Char1Btimer = BisReady.FODDLLMGGNB;
+                if (Char2Select && Char2Select.activeInHierarchy)
+                    Char2Btimer = BisReady.FODDLLMGGNB;
+                if (Char3Select && Char3Select.activeInHierarchy)
+                    Char3Btimer = BisReady.FODDLLMGGNB;
+                if (Char4Select && Char4Select.activeInHierarchy)
+                    Char4Btimer = BisReady.FODDLLMGGNB;
+            }
+
+            if (Char1Btimer > 0)
+                Char1Btimer -= Time.deltaTime;
+            if (Char1Btimer < 0)
+                Char1Btimer = 0.00f;
+
+            if (Char2Btimer > 0)
+                Char2Btimer -= Time.deltaTime;
+            if (Char2Btimer < 0)
+                Char2Btimer = 0.00f;
+
+            if (Char3Btimer > 0)
+                Char3Btimer -= Time.deltaTime;
+            if (Char3Btimer < 0)
+                Char3Btimer = 0.00f;
+
+            if (Char4Btimer > 0)
+                Char4Btimer -= Time.deltaTime;
+            if (Char4Btimer < 0)
+                Char4Btimer = 0.00f;
+        }
+
+        #endregion
+
+        #region Find
+
+        private static void FindSkillIndicator()
+        {
+            if (IsReadyObj == null)
+                IsReadyObj =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)");
+
+            if (IsReady == null && IsReadyObj)
+            {
+                IsReady = GameObject
+                    .Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill2Grp/Slot2/ActionBtn_Skill2(Clone)")
+                    .GetComponent<MonoBattleBtn>();
+            }
+        }
+
+        private static void FindBurstIndicator()
+        {
+            if (Char1Bstate == null && Char1)
+                Char1Bstate = FindObject(Char1, "EC_Btn");
+            if (Char2Bstate == null && Char2)
+                Char2Bstate = FindObject(Char2, "EC_Btn");
+            if (Char3Bstate == null && Char3)
+                Char3Bstate = FindObject(Char3, "EC_Btn");
+            if (Char4Bstate == null && Char4)
+                Char4Bstate = FindObject(Char4, "EC_Btn");
+
+            if (BisReadyPC == null)
+                BisReadyPC =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
+            if (BisReadyCon == null)
+                BisReadyCon =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
+
+            if (BisReady == null)
+            {
+                if (BisReadyPC)
+                    BisReady = BisReadyPC.GetComponent<MonoBattleBtn>();
+                else if (BisReadyCon)
+                    BisReady = BisReadyCon.GetComponent<MonoBattleBtn>();
             }
         }
 
@@ -197,153 +306,43 @@ namespace QoL
                 Char4Select = FindObject(Char4, "Eff_UI_Pressed");
         }
 
-        private static void FindBurstIndicator()
-        {
-            if (Char1Bstate == null && Char1)
-                Char1Bstate = FindObject(Char1, "EC_Btn");
-            if (Char2Bstate == null && Char2)
-                Char2Bstate = FindObject(Char2, "EC_Btn");
-            if (Char3Bstate == null && Char3)
-                Char3Bstate = FindObject(Char3, "EC_Btn");
-            if (Char4Bstate == null && Char4)
-                Char4Bstate = FindObject(Char4, "EC_Btn");
-
-            if (BisReadyPC == null)
-                BisReadyPC = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/Skill5Grp/Slot5/ActionBtn_Skill5_PC(Clone)");
-            if (BisReadyCon == null)
-                BisReadyCon = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/ActionPanelContainer/ActionBtnPanel/GrpSkill/Skill5Grp/Slot5/ActionBtn_Skill5(Clone)");
-
-            if (BisReady == null)
-            {
-                if (BisReadyPC)
-                    BisReady = BisReadyPC.GetComponent<MonoBattleBtn>();
-                else if (BisReadyCon)
-                    BisReady = BisReadyCon.GetComponent<MonoBattleBtn>();
-            }
-        }
-
         private static void FindCharacterNames()
         {
             if (Char1NameObj == null)
-                Char1NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
+                Char1NameObj =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText");
             if (Char2NameObj == null)
-                Char2NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText");
+                Char2NameObj =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText");
             if (Char3NameObj == null)
-                Char3NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText");
+                Char3NameObj =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText");
             if (Char4NameObj == null)
-                Char4NameObj = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText");
+                Char4NameObj =
+                    GameObject.Find(
+                        "/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText");
 
             if (Char1Name == null && Char1NameObj)
-                Char1Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText").GetComponent<Text>();
+                Char1Name = GameObject
+                    .Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/0/TeamBtn/NameText")
+                    .GetComponent<Text>();
             if (Char2Name == null && Char2NameObj)
-                Char2Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText").GetComponent<Text>();
+                Char2Name = GameObject
+                    .Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/1/TeamBtn/NameText")
+                    .GetComponent<Text>();
             if (Char3Name == null && Char3NameObj)
-                Char3Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText").GetComponent<Text>();
+                Char3Name = GameObject
+                    .Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/2/TeamBtn/NameText")
+                    .GetComponent<Text>();
             if (Char4Name == null && Char4NameObj)
-                Char4Name = GameObject.Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText").GetComponent<Text>();
+                Char4Name = GameObject
+                    .Find("/Canvas/Pages/InLevelMainPage/GrpMainPage/TeamBtnContainer/Content/3/TeamBtn/NameText")
+                    .GetComponent<Text>();
         }
 
-        private static void SetBurstTimer()
-        {
-            if (BisReady && BisReady.GPGMMHJKEJM == 0)
-            {
-                if (Char1Select && Char1Select.activeInHierarchy)
-                {
-                    Char1Btimer = BisReady.FODDLLMGGNB;
-                }
-                if (Char2Select && Char2Select.activeInHierarchy)
-                {
-                    Char2Btimer = BisReady.FODDLLMGGNB;
-                }
-                if (Char3Select && Char3Select.activeInHierarchy)
-                {
-                    Char3Btimer = BisReady.FODDLLMGGNB;
-                }
-                if (Char4Select && Char4Select.activeInHierarchy)
-                {
-                    Char4Btimer = BisReady.FODDLLMGGNB;
-                }
-            }
-            if (Char1Btimer > 0)
-                Char1Btimer -= Time.deltaTime;
-            if (Char1Btimer < 0)
-                Char1Btimer = 0.00f;
-
-            if (Char2Btimer > 0)
-                Char2Btimer -= Time.deltaTime;
-            if (Char2Btimer < 0)
-                Char2Btimer = 0.00f;
-
-            if (Char3Btimer > 0)
-                Char3Btimer -= Time.deltaTime;
-            if (Char3Btimer < 0)
-                Char3Btimer = 0.00f;
-
-            if (Char4Btimer > 0)
-                Char4Btimer -= Time.deltaTime;
-            if (Char4Btimer < 0)
-                Char4Btimer = 0.00f;
-        }
-
-        private static void SetSkillTimer()
-        {
-            if (IsReady && IsReady.GPGMMHJKEJM == 0)
-            {
-                if (Char1Select && Char1Select.activeInHierarchy)
-                {
-                    Char1Timer = IsReady.FODDLLMGGNB;
-                }
-                if (Char2Select && Char2Select.activeInHierarchy)
-                {
-                    Char2Timer = IsReady.FODDLLMGGNB;
-                }
-                if (Char3Select && Char3Select.activeInHierarchy)
-                {
-                    Char3Timer = IsReady.FODDLLMGGNB;
-                }
-                if (Char4Select && Char4Select.activeInHierarchy)
-                {
-                    Char4Timer = IsReady.FODDLLMGGNB;
-                }
-            }
-            if (Char1Timer > 0)
-                Char1Timer -= Time.deltaTime;
-            if (Char1Timer < 0)
-                Char1Timer = 0.00f;
-
-            if (Char2Timer > 0)
-                Char2Timer -= Time.deltaTime;
-            if (Char2Timer < 0)
-                Char2Timer = 0.00f;
-
-            if (Char3Timer > 0)
-                Char3Timer -= Time.deltaTime;
-            if (Char3Timer < 0)
-                Char3Timer = 0.00f;
-
-            if (Char4Timer > 0)
-                Char4Timer -= Time.deltaTime;
-            if (Char4Timer < 0)
-                Char4Timer = 0.00f;
-        }
-
-        public static GameObject FindObject(GameObject parent, string name)
-        {
-            GameObject candidate = null;
-            Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
-            foreach (var t in trs)
-            {
-                if (t == null)
-                {
-                    continue;
-                }
-                if (t.name == name)
-                {
-                    candidate = t.gameObject;
-                }
-            }
-            Array.Clear(trs, 0, trs.Length);
-            return candidate;
-        }
+        #endregion
     }
 }

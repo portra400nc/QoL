@@ -1,14 +1,16 @@
 ﻿using System;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-
 using static QoL.Main;
 
 namespace QoL
 {
     public class CameraController : MonoBehaviour
     {
-        public CameraController(IntPtr ptr) : base(ptr) { }
+        public CameraController(IntPtr ptr) : base(ptr)
+        {
+        }
+
         public CameraController() : base(ClassInjector.DerivedConstructorPointer<CameraController>())
         {
             ClassInjector.DerivedConstructorBody(this);
@@ -23,12 +25,13 @@ namespace QoL
 
         public void Update()
         {
-            if (newcam)
-                newcam.fieldOfView = newcamFOV;
-            if (maincam)
-                _mainTransform.rotation = maincam.transform.rotation;
-            if (newcamTarget)
-                _mainTransform.position = newcamTarget.position + new Vector3(xOffset, yOffset, zOffset) - _mainTransform.forward * distanceFromTarget;
+            if (Newcam)
+                Newcam.fieldOfView = NewcamFOV;
+            if (Maincam)
+                _mainTransform.rotation = Maincam.transform.rotation;
+            if (NewcamTarget)
+                _mainTransform.position = NewcamTarget.position + new Vector3(XOffset, YOffset, ZOffset) -
+                                          _mainTransform.forward * DistanceFromTarget;
         }
     }
 }

@@ -1,24 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using System.Threading.Tasks;
 using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-using UnityEngine.UI;
-using MoleMole;
+using Object = UnityEngine.Object;
 
 namespace QoL
 {
+    public static class BuildInfo
+    {
+        public const string Name = "QoL";
+        public const string Description = null;
+        public const string Author = "portra";
+        public const string Company = null;
+        public const string Version = "1.0.0";
+        public const string DownloadLink = null;
+    }
+
     public class Loader : MelonMod
     {
-        public static GameObject isRunning;
-        public static GameObject DarkModeObj;
-
+        public static GameObject IsRunning;
         public static Action<string> Msg;
         public static Action<string> Warning;
         public static Action<string> Error;
+
         public override void OnApplicationStart()
         {
             ClassInjector.RegisterTypeInIl2Cpp<Cooldown>();
@@ -29,21 +33,16 @@ namespace QoL
             Warning = LoggerInstance.Warning;
             Error = LoggerInstance.Error;
         }
-        public override void OnApplicationLateStart()
-        {
-            
-        }
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote) && isRunning == null)
-            {
-                isRunning = new GameObject();
-                isRunning.AddComponent<Cooldown>();
-                isRunning.AddComponent<Main>();
-                isRunning.AddComponent<LoadingScreen>();
-                GameObject.DontDestroyOnLoad(isRunning);
-            }
+            if (!Input.GetKeyDown(KeyCode.BackQuote) || IsRunning != null) return;
+
+            IsRunning = new GameObject();
+            IsRunning.AddComponent<Cooldown>();
+            IsRunning.AddComponent<Main>();
+            IsRunning.AddComponent<LoadingScreen>();
+            Object.DontDestroyOnLoad(IsRunning);
         }
     }
 }
